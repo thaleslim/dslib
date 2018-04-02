@@ -1,0 +1,15 @@
+[0m[[0m[0minfo[0m] [0m[0m[32mTestList:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mA List[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should have size == 0 before inserting any element[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should have size == 1 after inserting one element[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should have size == 3 after inserting three elements[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should should keep the list of inserted values[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should return Some(1) when we call find(1000) in the list [100, 1000, 10000][0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should throw InvalidArgument when we call insert(1, 1) on an empty list[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should throw InvalidArgument when we call insert(4, 4) on a list with values [1,3,4][0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should shift the elements of a list. that is [10,30,40].insert(1,20) = [10,20,30,40][0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should have size == 2 and shift the elements after removing a element of a list. that is [1,2,88,3].remove(2) = [1,2,3][0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should have the value [10, 30] after removing the second element (idx = 1) in the list [10, 20, 30][0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should the value 30 should not appear after removing the third element (idx = 2) in the list [10, 20, 30][0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should lead to a list [3,4,5,6,7,8] when we call [3, 4, 5].addAll([6, 7, 8])[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should lead to a list of [c1, r1, c2, c3, c4] when we call [c1, r1, c2].addAll[c3, c4]][0m[0m
