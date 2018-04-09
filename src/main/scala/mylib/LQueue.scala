@@ -5,7 +5,7 @@ package mylib
   *
   * @author Rafael G. de Paulo
   */
-  
+
 case class NodeLQueue[T](val value: T, var prev: Option[NodeLQueue[T]] = None, var next: Option[NodeLQueue[T]] = None)
 
 class LQueue[T] extends Queue[T] {

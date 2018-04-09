@@ -12,4 +12,5 @@ trait Queue[T] {
   def head: Option[T]
   def tail: Option[T]
   def size: Int 
+  
 }
