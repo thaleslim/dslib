@@ -7,13 +7,5 @@ class testQueue extends FlatSpec with Matchers {
         myQueue.size should be (0)
     }
     it should "" in {
-        myQueue.pop() match {
-            case Some(value) => {
-
-            }
-            case None => {
-
-            }
-        }
     }
 }
