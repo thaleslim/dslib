@@ -1,6 +1,7 @@
 package mylib
 package modifications
 import contracts.{Node, EstLin}
+import scala.reflect._
 
 /**
  *  Trait que define a habilidade de usar map()
@@ -8,6 +9,13 @@ import contracts.{Node, EstLin}
  * 
  * @author Rafael G. de Paulo
  */
-trait mappable[T, NodeImpl <: Node[T, NodeImpl]] extends EstLin[T] {
-  def map(foo: (T) => T)
+trait mappable[T, EstImpl <: EstLin[T]] extends EstLin[T] {
+
+  protected def instanciate(): EstImpl
+
+  def map(foo: (T) => T): EstImpl = {
+    val estLin = instanciate()
+    foreach { (value: T) => estLin.push( foo(value) ) }
+    estLin
+  }
 }

@@ -12,4 +12,6 @@ abstract class EstLin[T] {
   def tail: Option[T]             // retorna o valor do elemento "final", "último" ou "cauda" da estrutura linear. se existir
   def foreach(foo: T => _): Unit  // executa a função inserida em cada elemento da estrutura linear
   def size: Int                   // retorna a quantidade de elementos atualmente na estrutura linear
+  def push(value: T): Unit        // insere um valor na estrutura linear
+  def pop(): Option[T]            // remove um valor da estrutura linear
 }

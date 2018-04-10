@@ -76,5 +76,5 @@ class LQueue[T] extends Queue[T] with linked[T, LQueueNode[T]]{
       case None        => // fila vazia, não faça nada
     }
     
-  } 
+  }
 }
