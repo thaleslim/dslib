@@ -1,12 +1,12 @@
 package mylib
+package contracts
 
 /**
-  * Especificação de Queue(fila).
-  *
-  * @author Rafael G. de Paulo
-  */
-
-trait Queue[T] extends EstLinEnc[T] {
+ * Classe abstrata que define o contrato de uma fila (Queue).
+ *
+ * @author Rafael G. de Paulo
+ */
+abstract class Queue[T] extends EstLin[T] {
   def push(value: T): Unit  // adiciona um valor a fila
   def pop(): Option[T]      // retira um elemento da fila, e retorna seu valor. caso esteja vazia, não altera ela e retorna None
   def head: Option[T]       // retorna o valor do elemento "inicial", "primeiro" ou "cabeça" da fila

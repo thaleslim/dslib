@@ -1,13 +1,14 @@
 package mylib
+package contracts
 
-/*
- *  Trait que define o contrato de um
+/**
+ *  Classe abstrata que define o contrato de um
  * Node que contém um valor de T e uma
  * referencia ao próximo Node
- * (Rafael G. de Paulo)
  *
-*/
-trait Node[T, NodeType <: Node[T, NodeType]] {
+ * @author Rafael G. de Paulo
+ */
+abstract class Node[T, NodeType <: Node[T, NodeType]] {
   var next: Option[NodeType]	// uma referência ao próximo Node
   protected val _value: T			// o valor que o Node contém
 
