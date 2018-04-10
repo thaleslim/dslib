@@ -1,5 +1,6 @@
 package mylib
 package modifications
+import contracts.{Node, EstLin}
 
 /**
  *  Trait que define o comportamento de

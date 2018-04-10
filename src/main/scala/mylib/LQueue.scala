@@ -1,13 +1,13 @@
 package mylib
 
-import mods
+import modifications._
+import contracts.{EstLin, Node, Queue}
 
 /**
  * Implementação encadeada de de Queue(fila).
  *
  * @author Rafael G. de Paulo
- */
-
+ */ 
 case class LQueueNode[T](
   val _value: T,                              		// o valor do Node
   var   prev: Option[LQueueNode[T]] = None,				// referência ao Node anterior (mais próximo da cauda)
