@@ -1,7 +1,6 @@
 package mylib
 package modifications
-import contracts.{Node, EstLin}
-import scala.reflect._
+import contracts.EstLin
 
 /**
  *  Trait que define a habilidade de usar map()
