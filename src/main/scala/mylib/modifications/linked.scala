@@ -1,5 +1,5 @@
 package mylib
-package mods
+package modifications
 
 /**
  *  Trait que define o comportamento de
