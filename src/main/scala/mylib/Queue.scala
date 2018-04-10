@@ -6,7 +6,7 @@ package mylib
   * @author Rafael G. de Paulo
   */
 
-trait Queue[T] extends LinEstDado[T] {
+trait Queue[T] extends EstLinEnc[T] {
   def push(value: T): Unit
   def pop(): Option[T]
   def head: Option[T]

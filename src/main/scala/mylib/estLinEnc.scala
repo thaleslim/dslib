@@ -6,7 +6,7 @@ package mylib
  * (Rafael G. de Paulo)
  *
 */
-trait LinEstDado[T] {
+trait EstLinEnc[T] {
     def head: Option[T]
     def tail: Option[T]
     def size: Int
