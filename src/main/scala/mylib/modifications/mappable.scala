@@ -2,7 +2,8 @@ package mylib
 package modifications
 
 /**
- * Representa a habilidade de uma estrutura linear de usar a função map()
+ *  Trait que define a habilidade de usar map()
+ * em uma Estrutura de Dados linear.
  * 
  * @author Rafael G. de Paulo
  */
