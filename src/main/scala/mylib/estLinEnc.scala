@@ -7,7 +7,7 @@ package mylib
  *
 */
 trait EstLinEnc[T] {
-    def head: Option[T]
-    def tail: Option[T]
-    def size: Int
+  def head: Option[T]       // retorna o valor do elemento "inicial", "primeiro" ou "cabeça" da estrutura linear
+  def tail: Option[T]       // retorna o valor do elemento "final", "último" ou "cauda" da estrutura linear
+  def size: Int             // retorna a quantidade de elementos atualmente na estrutura linear
 }

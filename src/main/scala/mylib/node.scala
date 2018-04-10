@@ -8,8 +8,8 @@ package mylib
  *
 */
 trait Node[T, NodeType <: Node[T, NodeType]] {
-    var next: Option[NodeType]
-    protected val _value: T
+  var next: Option[NodeType]	// uma referência ao próximo Node
+  protected val _value: T			// o valor que o Node contém
 
-    def value: T = _value
+  def value: T = _value				// retorna o valor contido no Node
 }
