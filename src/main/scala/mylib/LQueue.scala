@@ -21,36 +21,28 @@ class LQueue[T] extends Queue[T] with linked[T, LQueueNode[T]]{
 
   def size = _size																// retorna o tamanho da fila
 
-  def push(value: T) {														// encapsula um valor em um Node, e coloca ele na cauda
+  def push(value: T) {                            // coloca um valor em um elemento, e adiciona ele à cauda da fila
     _tail match {
-      // non-empty Queue
-      case Some(node) => {
-        node.prev = Some(LQueueNode[T](value, _tail))
+      case Some(node) => {                        // fila não-vazia
+        node.prev = Some(LQueueNode[T](value, None, _tail))
         _tail = node.prev
       }
-      // empty Queue
-      case None => {
-        _tail = Some(LQueueNode[T](value))
+      case None => {                              // fila vazia
+        _head = Some(LQueueNode[T](value))
+        _tail = _head 
       }
     }
     _size += 1
-    if (size == 1)
-      _head = _tail
   }
-	def pop(): Option[T] = _head match {						// retira um Node da cabeça, e retorna o valor dele
-			case Some(node) => {
-				node.prev match {
-						case Some(aNode) => aNode.next = None
-						case None => // nada a fazer
-				}
-				_head = node.prev
-				_size -= 1
-				Some(node.value)
-			}
-			case None => {
-				None
-		}
-	}
+  def pop(): Option[T] = _head match {            // retira um elemento da fila, se possível, e retorna o seu valor interno
+    case None       => None                       // fila vazia
+    case Some(node) => {                          // fila não vazia
+      _head = node.prev
+      _head match { case Some(anode) => anode.next = None case None => }
+      _size -= 1
+      Some(node.value)
+    }
+  }
   def head: Option[T] = _head match {							// retorna o valor do elemento da cabeça, se existe
 		case Some(v) => Some(v.value)
 		case None => None
