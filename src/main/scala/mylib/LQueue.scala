@@ -14,13 +14,12 @@ case class LQueueNode[T](
   var   next: Option[LQueueNode[T]] = None				// referência ao próximo Node  (mais próximo da cabeça)
 ) extends Node[T, LQueueNode[T]]
 
-class LQueue[T] extends Queue[T] with linked[T, LQueueNode[T]]{
+class LQueue[T] extends Queue[T] with linked[T, LQueueNode[T]] with instanceable[T, LQueue[T]] with foreach[T, LQueueNode[T]] {
   private var _size: Int = 0											// o tamanho da fila
   private var _head: Option[LQueueNode[T]] = None	// referência a cabeça da fila
   private var _tail: Option[LQueueNode[T]] = None	// referência a cauda da fila
 
   def size = _size																// retorna o tamanho da fila
-
   def push(value: T) {                            // coloca um valor em um elemento, e adiciona ele à cauda da fila
     _tail match {
       case Some(node) => {                        // fila não-vazia
@@ -51,22 +50,8 @@ class LQueue[T] extends Queue[T] with linked[T, LQueueNode[T]]{
 		case Some(v) => Some(v.value)
 		case None => None
 	}
-  def foreach(foo: (T) => _) {                    // chama a função dada em todos os valores da fila, da cabeça a cauda
-
-    // definindo subrotina que itera em todos os nós e chama foo
-    def exec(node: LQueueNode[T], foo: (T) => _) {
-      foo(node.value)
-      node.prev match {
-        case Some(nextNode) => exec(nextNode, foo)  // se o Node existe, siga com o próximo
-        case None           =>                      // não precisa fazer nada
-      }
-    }
-
-    // se a fila não está vazia, itera nela
-    _head match {
-      case Some(aNode) => exec(aNode, foo)
-      case None        => // fila vazia, não faça nada
-    }
-    
-  }
+  
+  def instantiate(): LQueue[T] = new LQueue[T]    // instancia um LQueue[T] e retorna ele
+  def next(node: LQueueNode[T])        = node.next  // retorna o próximo node
+  def firstNode: Option[LQueueNode[T]] = _head      // retorna a cabeça da fila
 }

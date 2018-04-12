@@ -9,6 +9,7 @@ import contracts.{Node, EstLin}
  *
  * @author Rafael G. de Paulo
  */
-trait linked[T, ImpNode <: Node[T, ImpNode]] extends EstLin[T]{
-  def next(node: ImpNode): Option[ImpNode] = node.next 
+trait linked[T, ImpNode <: Node[T, ImpNode]] extends EstLin[T] {
+  def firstNode: Option[ImpNode]            // pega o primeiro nó da estrutura
+  def next(node: ImpNode): Option[ImpNode]  // segua a estrutura na ordem que ela preferir
 }
