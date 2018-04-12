@@ -51,7 +51,7 @@ class LQueue[T] extends Queue[T] with linked[T, LQueueNode[T]] with instanceable
 		case None => None
 	}
   
-  def instantiate(): LQueue[T] = new LQueue[T]    // instancia um LQueue[T] e retorna ele
+  def instantiate(): LQueue[T] = new LQueue[T]      // instancia um LQueue[T] e retorna ele
   def next(node: LQueueNode[T])        = node.prev  // retorna o próximo node
   def firstNode: Option[LQueueNode[T]] = _head      // retorna a cauda da fila (assim foreach itera nela da cabeça a cauda)
 }

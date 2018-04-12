@@ -4,7 +4,12 @@ import contracts.EstLin
 
 /**
  *  Trait que define a habilidade de usar map()
- * em uma Estrutura de Dados linear.
+ * em uma Estrutura de Dados linear. map() aplica
+ * uma função T => T em todos os valores da estrutura
+ * linear, e retorna uma nova instancia da estrutura,
+ * com os valores originais trocados pelo resultado
+ * de obtido chamando a função inserida como argumento
+ * aplicada aos valores guardados na Estrutura Linear
  * 
  * @author Rafael G. de Paulo
  */

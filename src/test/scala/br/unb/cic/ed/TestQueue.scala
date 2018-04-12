@@ -45,7 +45,7 @@ class testQueue extends FlatSpec with Matchers {
         myQueue.tail should be (Some(3))
         myQueue.size should be (3)
     }
-    it should "result in 6 after pushing 1, 2 and 3 and calling foreach(sum += _)" in {
+    it should "result in 6 after pushing 1, 2 and 3 and calling foreach(sum += (_: Int))" in {
         val myQueue = new LQueue[Int]()
         var sum: Int = 0
         myQueue.push(1)
@@ -69,5 +69,18 @@ class testQueue extends FlatSpec with Matchers {
         mappedQueue.pop() should be (Some(2))
         mappedQueue.pop() should be (Some(4))
         mappedQueue.pop() should be (Some(6))
+    }
+    it should "result in a LQueue that pops 1, 3 after pushing 1, 2, 3, 4 and calling filter(_ % 2 == 1) in a LQueue that mixes in filter" in {
+        val myQueue = new LQueue[Int] with filter[Int, LQueue[Int]]()
+
+        myQueue.push(1)
+        myQueue.push(2)
+        myQueue.push(3)
+        myQueue.push(4)
+
+        val mappedQueue = myQueue.filter(_ % 2 == 1)
+
+        mappedQueue.pop() should be (Some(1))
+        mappedQueue.pop() should be (Some(3))
     }
 }
