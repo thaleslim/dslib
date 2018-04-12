@@ -1,5 +1,6 @@
 import org.scalatest._
 import mylib._
+import mylib.modifications._
 
 class testQueue extends FlatSpec with Matchers {
     "A Queue" should "have size = 0 after initialized" in {
@@ -55,5 +56,18 @@ class testQueue extends FlatSpec with Matchers {
             sum += (_: Int)
         }
         sum should be (6)
+    }
+    it should "result in a LQueue that pops 2, 4, 6 after pushing 1, 2, 3 and calling map((_: Int) * 2) in a LQueue that mixes in map" in {
+        val myQueue = new LQueue[Int] with map[Int, LQueue[Int]]()
+
+        myQueue.push(1)
+        myQueue.push(2)
+        myQueue.push(3)
+
+        val mappedQueue = myQueue.map((_: Int) * 2)
+
+        mappedQueue.pop() should be (Some(2))
+        mappedQueue.pop() should be (Some(4))
+        mappedQueue.pop() should be (Some(6))
     }
 }
