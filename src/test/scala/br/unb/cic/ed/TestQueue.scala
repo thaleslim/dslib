@@ -51,7 +51,9 @@ class testQueue extends FlatSpec with Matchers {
         myQueue.push(2)
         myQueue.push(3)
 
-        myQueue.foreach(sum += (_: Int))
+        myQueue.foreach {
+            sum += (_: Int)
+        }
         sum should be (6)
     }
 }
