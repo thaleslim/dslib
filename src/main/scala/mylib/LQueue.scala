@@ -14,10 +14,14 @@ case class LQueueNode[T](
   var   next: Option[LQueueNode[T]] = None				// referência ao próximo Node  (mais próximo da cabeça)
 ) extends Node[T, LQueueNode[T]]
 
-class LQueue[T] extends Queue[T] with linked[T, LQueueNode[T]] with instanceable[T, LQueue[T]] with foreach[T, LQueueNode[T]] {
+class LQueue[T](values: T*) extends Queue[T] with linked[T, LQueueNode[T]] with instanceable[T, LQueue[T]] with foreach[T, LQueueNode[T]] {
   private var _size: Int = 0											// o tamanho da fila
   private var _head: Option[LQueueNode[T]] = None	// referência a cabeça da fila
   private var _tail: Option[LQueueNode[T]] = None	// referência a cauda da fila
+
+  /** única parte do Construtor que faz alguma coisa **********************************************************************************************/
+  values foreach { this.push(_) } // colocando todos os argumentos para a LQueue
+  /** única parte do Construtor que faz alguma coisa **********************************************************************************************/
 
   def size = _size																// retorna o tamanho da fila
   def push(value: T) {                            // coloca um valor em um elemento, e adiciona ele à cauda da fila
