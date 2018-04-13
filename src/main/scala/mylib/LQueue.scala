@@ -24,7 +24,7 @@ class LQueue[T](values: T*) extends Queue[T] with linked[T, LQueueNode[T]] with 
   /** única parte do Construtor que faz alguma coisa **********************************************************************************************/
 
   def size = _size																// retorna o tamanho da fila
-  def push(value: T) {                            // coloca um valor em um elemento, e adiciona ele à cauda da fila
+  def push(value: T): Boolean = {                 // coloca um valor em um elemento, e adiciona ele à cauda da fila
     _tail match {
       case Some(node) => {                        // fila não-vazia
         node.prev = Some(LQueueNode[T](value, None, _tail))
@@ -36,6 +36,7 @@ class LQueue[T](values: T*) extends Queue[T] with linked[T, LQueueNode[T]] with 
       }
     }
     _size += 1
+    true;
   }
   def pop(): Option[T] = _head match {            // retira um elemento da fila, se possível, e retorna o seu valor interno
     case None       => None                       // fila vazia
