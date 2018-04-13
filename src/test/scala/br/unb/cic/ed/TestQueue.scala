@@ -83,4 +83,13 @@ class testQueue extends FlatSpec with Matchers {
         mappedQueue.pop() should be (Some(1))
         mappedQueue.pop() should be (Some(3))
     }
+    it should "result in \"1-2-3-\" after pushing 1, 2, 3 into a LQueue that mixes in reduce and calling reduce((str, num) => {str + num + \"-\"}, \"\")" in {
+        val myQueue = new LQueue[Int] with reduce[Int]()
+
+        myQueue.push(1)
+        myQueue.push(2)
+        myQueue.push(3)
+
+        myQueue.reduce[String]((_: String) + (_:Int) + "-", "") should be ("1-2-3-")
+    }
 }

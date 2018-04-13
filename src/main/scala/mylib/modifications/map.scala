@@ -10,6 +10,10 @@ import contracts.EstLin
  * com os valores originais trocados pelo resultado
  * de obtido chamando a função inserida como argumento
  * aplicada aos valores guardados na Estrutura Linear
+ *
+ * PS: por enquanto só é possível mapear T => T porque, apesar de ter passado 15+
+ * horas pesquisando como fazer funcionar, eu ainda não descobri uma forma de fazer
+ * mapeamento(ou redução) em T => A, com A sendo um tipo parametrizado em map()
  * 
  * @author Rafael G. de Paulo
  */
