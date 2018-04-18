@@ -10,5 +10,8 @@ import contracts.{Node, EstLin}
  * @author Rafael G. de Paulo
  */
 trait instanceable[T, EstImpl <: instanceable[T, EstImpl]] extends EstLin[T] {
-  def instantiate(): EstImpl      // instancia um EstImpl e retorna ele
+  /**
+  * Instancia um EstImpl e o retorna
+  */ 
+  def instantiate(): EstImpl
 }

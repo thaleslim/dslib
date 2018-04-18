@@ -16,13 +16,27 @@ import contracts.EstLin
  * mapeamento(ou redução) em T => A, com A sendo um tipo parametrizado em map()
  * 
  * @author Rafael G. de Paulo
+ *
+ * @param T: o tipo de dado guardado pela Estrutura de Dados Linear
+ * @param EstImpl: o tipo de Estrutura de dados linear que será retornado por map()
  */
-// T: o tipo de dado guardado pela Estrutura de Dados Linear
-// EstImpl: o tipo de Estrutura de dados linear que será retornado por map()
+
 trait map[T, EstImpl <: instanceable[T, EstImpl]] extends instanceable[T, EstImpl] {
-  def map(foo: (T) => T): EstImpl = {                     // retorna uma EstImpl, com o resultado de foo() aplicada em cada valor
-    val estLin = instantiate()                            // instancia uma nova EstImpl
-    foreach { (value: T) => estLin.push( foo(value) ) }   // enche a nova estrutura linear com os valores adequados
-    estLin                                                // retorna ela
+  /**
+  * Retorna uma EstImpl, com o resultado de foo() aplicada em cada valor
+  */
+  def map(foo: (T) => T): EstImpl = {
+    /**
+    * Instancia uma nova EstImpl
+    */
+    val estLin = instantiate()
+    /**
+    * Enche a nova estrutura linear com os valores adequados
+    */    
+    foreach { (value: T) => estLin.push( foo(value) ) }
+    /**
+    * Retorna a estrutura
+    */    
+    estLin
   }
 }
