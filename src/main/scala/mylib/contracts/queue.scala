@@ -7,10 +7,35 @@ package contracts
  * @author Rafael G. de Paulo
  */
 abstract class Queue[T, QueueImpl <: Queue[T, QueueImpl]] extends EstLin[T] { this: QueueImpl =>
-  // override def instantiate[A, QImpl <: EstLin[A, QImpl]](inc: Int): QImpl
-  def push(value: T): Boolean // adiciona um valor a fila. retorna false se a fila não tem espaço pra ele (se não for encadeada)
-  def pop(): Option[T]        // retira um elemento da fila, e retorna seu valor. caso esteja vazia, não altera ela e retorna None
-  def head: Option[T]         // retorna o valor do elemento "inicial", "primeiro" ou "cabeça" da fila
-  def tail: Option[T]         // retorna o valor do elemento "final", "último" ou "cauda" da fila
-  def size: Int               // retorna a quantidade de elementos atualmente na fila
+
+  /**
+   * Adiciona um valor do tipo T a fila. Funciona de forma FIFO. Ou seja,
+   *  um elemento inserido com push vai para a cauda(tail) da fila, e com
+   *  cada pop() ele se aproxima da cabeça(head).
+   *
+   * @param value valor a ser adicionado a fila, de tipo T
+   *
+   * @return false se a implementação é estática, e a fila já estava cheia. Em qualquer outra situação, true
+   */
+  def push(value: T): Boolean
+
+  /**
+   * retira um elemento da fila, e retorna seu valor. caso esteja vazia, não altera ela e retorna None
+   */
+  def pop(): Option[T]
+  
+  /**
+   * retorna o valor do elemento "inicial", "primeiro" ou "cabeça" da fila
+   */
+  def head: Option[T]
+  
+  /**
+   * retorna o valor do elemento "final", "último" ou "cauda" da fila
+   */
+  def tail: Option[T]
+  
+  /**
+   * retorna a quantidade de elementos atualmente na fila
+   */
+  def size: Int
 }

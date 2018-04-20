@@ -9,8 +9,19 @@ package contracts
  * @author Rafael G. de Paulo
  */
 abstract class Node[T, NodeType <: Node[T, NodeType]] {
-  var next: Option[NodeType]	// uma referência ao próximo Node
-  protected val _value: T			// o valor que o Node contém
-
-  def value: T = _value				// retorna o valor contido no Node
+  /**
+   * Referência ao próximo Node
+   */
+  protected var next: Option[NodeType]
+  
+  /**
+   * O valor que o Node contém
+   */
+  protected val _value: T
+  
+  /**
+   * Retorna o valor contido no Node
+   * @return o valor do tipo T guardado dentro do Node
+   */
+  def value: T = _value
 }
