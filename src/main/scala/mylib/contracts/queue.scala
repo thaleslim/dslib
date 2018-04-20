@@ -6,7 +6,8 @@ package contracts
  *
  * @author Rafael G. de Paulo
  */
-abstract class Queue[T] extends EstLin[T] {
+abstract class Queue[T, QueueImpl <: Queue[T, QueueImpl]] extends EstLin[T] { this: QueueImpl =>
+  // override def instantiate[A, QImpl <: EstLin[A, QImpl]](inc: Int): QImpl
   def push(value: T): Boolean // adiciona um valor a fila. retorna false se a fila não tem espaço pra ele (se não for encadeada)
   def pop(): Option[T]        // retira um elemento da fila, e retorna seu valor. caso esteja vazia, não altera ela e retorna None
   def head: Option[T]         // retorna o valor do elemento "inicial", "primeiro" ou "cabeça" da fila

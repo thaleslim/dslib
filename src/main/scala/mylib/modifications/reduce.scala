@@ -17,7 +17,8 @@ import contracts.EstLin
 // T: o tipo de dado guardado pela Estrutura de Dados Linear
 // EstImpl: o tipo de Estrutura de dados linear que será retornado por reduce()
 trait reduce[T] extends EstLin[T] {
-  def reduce[A](foo: (A, T) => A, initVal: A): A = {
+  def reduce[A](initVal: A)(foo: (A, T) => A): A = {
+//  def reduce[A](foo: (A, T) => A, initVal: A): A = { 
     var reduced: A = initVal
     foreach { (curVal: T) => reduced = foo(reduced, curVal) }
     reduced

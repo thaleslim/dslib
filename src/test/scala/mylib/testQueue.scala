@@ -48,30 +48,36 @@ class testQueue extends FlatSpec with Matchers {
         val myQueue = new LQueue[Int](1, 2, 3)
         var sum: Int = 0
 
-        myQueue.foreach {
-            sum += (_: Int)
-        }
+        myQueue.foreach { sum += (_: Int) }
         sum should be (6)
     }
     it should "result in a LQueue that pops 2, 4, 6 after initializing as LQueue[Int](1, 2, 3) and calling map((_: Int) * 2) in a LQueue that mixes in map" in {
-        val myQueue = new LQueue[Int](1, 2, 3) with map[Int, LQueue[Int]]
+        val myQueue = new LQueue[Int](1, 2, 3) with map[Int]
         val mappedQueue = myQueue.map((_: Int) * 2)
 
         mappedQueue.pop() should be (Some(2))
         mappedQueue.pop() should be (Some(4))
         mappedQueue.pop() should be (Some(6))
     }
-    it should "result in a LQueue that pops 1, 3 after initializing as LQueue[Int](1, 2, 3, 4) and calling filter(_ % 2 == 1) in a LQueue that mixes in filter" in {
-        val myQueue = new LQueue[Int](1, 2, 3, 4) with filter[Int, LQueue[Int]]
+    it should "result in a LQueue that pops \"|.1.|\", \"|.2.|\", \"|.3.|\" after initializing as LQueue[Int](1, 2, 3) and calling map[String](\"|.\" + (_*2) + \".|\") in a LQueue that mixes in map" in {
+        val myQueue = new LQueue[Int](1, 2, 3) with map[Int]
+        val mappedQueue = myQueue.map[String]("|." + _ + ".|")
 
-        val mappedQueue = myQueue.filter(_ % 2 == 1)
-
-        mappedQueue.pop() should be (Some(1))
-        mappedQueue.pop() should be (Some(3))
+        mappedQueue.pop() should be (Some("|.1.|"))
+        mappedQueue.pop() should be (Some("|.2.|"))
+        mappedQueue.pop() should be (Some("|.3.|"))
     }
-    it should "result in \"1-2-3-\" after initializing as LQueue[Int](1, 2, 3) into a LQueue that mixes in reduce and calling reduce((str, num) => {str + num + \"-\"}, \"\")" in {
+    it should "result in a LQueue that pops 1, 3 after initializing as LQueue[Int](1, 2, 3, 4) and calling filter(_ % 2 == 1) in a LQueue that mixes in filter" in {
+        val myQueue = new LQueue[Int](1, 2, 3, 4) with filter[Int]
+
+        val filterQueue = myQueue.filter(_ % 2 == 1)
+
+        filterQueue.pop() should be (Some(1))
+        filterQueue.pop() should be (Some(3))
+    }
+    it should "result in \"1-2-3-\" after initializing as LQueue[Int](1, 2, 3) into a LQueue that mixes in reduce and calling reduce(\"\"){_ + _ + \"-\"}" in {
         val myQueue = new LQueue[Int](1, 2, 3) with reduce[Int]
 
-        myQueue.reduce[String]((_: String) + (_:Int) + "-", "") should be ("1-2-3-")
+        myQueue.reduce[String](""){ (_: String) + (_:Int) + "-" } should be ("1-2-3-")
     }
 }

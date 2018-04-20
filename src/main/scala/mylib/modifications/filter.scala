@@ -1,6 +1,7 @@
 package mylib
 package modifications
 import contracts.EstLin
+import scala.reflect.ClassTag
 
 /**
  *  Trait que define a habilidade de usar filter()
@@ -13,13 +14,12 @@ import contracts.EstLin
  * @author Rafael G. de Paulo
  */
 // T: o tipo de dado guardado pela Estrutura de Dados Linear
-// EstImpl: o tipo de Estrutura de dados linear que será retornado por filter()
-trait filter[T, EstImpl <: instanceable[T, EstImpl]] extends instanceable[T, EstImpl] {
-  def filter(foo: (T) => Boolean): EstImpl = {            // realiza o comportamento descrito acima
-    val estLin = instantiate()                            // instancia uma nova EstImpl
-    foreach {
+trait filter[T] extends EstLin[T] {
+  def filter(foo: (T) => Boolean)(implicit ev: ClassTag[T]): EstLin[T] = {            // realiza o comportamento descrito acima
+    val estLin = instantiate[T]()                            // instancia uma nova EstImpl
+    foreach (
       (value: T) => if (foo(value)) estLin.push(value)    // enche a nova estrutura linear com os valores adequados
-    }   
+    )
     estLin                                                // retorna ela
   }
 }

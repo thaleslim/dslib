@@ -2,6 +2,7 @@ package mylib
 
 import modifications._
 import contracts.{EstLin, Node, Queue}
+import scala.reflect.ClassTag
 
 /**
  * Implementação encadeada de de Queue(fila).
@@ -14,7 +15,12 @@ case class LQueueNode[T](
   var   next: Option[LQueueNode[T]] = None				// referência ao próximo Node  (mais próximo da cabeça)
 ) extends Node[T, LQueueNode[T]]
 
-class LQueue[T](values: T*) extends Queue[T] with linked[T, LQueueNode[T]] with instanceable[T, LQueue[T]] with foreach[T, LQueueNode[T]] {
+class LQueue[T](values: T*) extends Queue[T, LQueue[T]]
+with linked[T, LQueueNode[T]]
+with foreach[T, LQueueNode[T]]
+with reduce[T]
+{
+  def instantiate[A: ClassTag](inc: Int): LQueue[A] = new LQueue[A]
   private var _size: Int = 0											// o tamanho da fila
   private var _head: Option[LQueueNode[T]] = None	// referência a cabeça da fila
   private var _tail: Option[LQueueNode[T]] = None	// referência a cauda da fila
@@ -56,7 +62,7 @@ class LQueue[T](values: T*) extends Queue[T] with linked[T, LQueueNode[T]] with 
 		case None => None
 	}
   
-  def instantiate(): LQueue[T] = new LQueue[T]      // instancia um LQueue[T] e retorna ele
+  // def instantiate(): LQueue[T] = new LQueue[T]      // instancia um LQueue[T] e retorna ele
   def next(node: LQueueNode[T])        = node.prev  // retorna o próximo node
   def firstNode: Option[LQueueNode[T]] = _head      // retorna a cauda da fila (assim foreach itera nela da cabeça a cauda)
 }
