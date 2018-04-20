@@ -14,7 +14,7 @@ import contracts.{EstLin, Node}
  */
 // T: o tipo de dado guardado pela Estrutura de Dados Linear
 // ImpNode: o tipo de do nó que a estrutura de dados linear usa
-trait foreach[T, ImpNode <: Node[T, ImpNode]] extends linked[T, ImpNode] {
+trait Foreach[T, ImpNode <: Node[T, ImpNode]] extends Linked[T, ImpNode] {
   // executa a função inserida em cada elemento da estrutura linear
   override def foreach(foo: (T) => Unit) {
     def iterate(node: Option[ImpNode]): Unit = node match {

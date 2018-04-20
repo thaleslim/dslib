@@ -20,7 +20,7 @@ import scala.reflect.ClassTag
  * @param EstImpl: o tipo de Estrutura de dados linear que será retornado por map()
  */
 // T: o tipo de dado guardado pela Estrutura de Dados Linear
-trait map[T] extends EstLin[T] {
+trait Map[T] extends EstLin[T] {
   def map[B: ClassTag](foo: (T) => B): EstLin[B] = {      // retorna uma EstImpl, com o resultado de foo() aplicada em cada valor
     val estLin = instantiate[B]()                         // instancia uma nova EstImpl
     foreach { (value: T) => estLin.push( foo(value) ) }   // enche a nova estrutura linear com os valores adequados

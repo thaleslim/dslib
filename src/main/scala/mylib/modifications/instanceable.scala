@@ -9,7 +9,7 @@ import contracts.{Node, EstLin}
  *
  * @author Rafael G. de Paulo
  */
-trait instanceable[T, EstImpl <: instanceable[T, EstImpl]] extends EstLin[T] {
+trait Instanceable[T, EstImpl <: Instanceable[T, EstImpl]] extends EstLin[T] {
   /**
   * Instancia um EstImpl e o retorna
   */ 

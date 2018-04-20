@@ -11,6 +11,6 @@ import contracts.EstLin
  *
  * @author Rafael G. de Paulo
  */
-trait static[T] extends EstLin[T] {
+trait Static[T] extends EstLin[T] {
   def maxSize: Int  // retorna o tamanho máximo da Estrutura Linear
 }

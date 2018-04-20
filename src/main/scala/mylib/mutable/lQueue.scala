@@ -17,9 +17,9 @@ case class LQueueNode[T](
 ) extends Node[T, LQueueNode[T]]
 
 class LQueue[T](values: T*) extends Queue[T, LQueue[T]]
-with linked[T, LQueueNode[T]]
-with foreach[T, LQueueNode[T]]
-with reduce[T]
+with Linked[T, LQueueNode[T]]
+with Foreach[T, LQueueNode[T]]
+with Reduce[T]
 {
   def instantiate[A: ClassTag](inc: Int): LQueue[A] = new LQueue[A]
   private var _size: Int = 0											// o tamanho da fila

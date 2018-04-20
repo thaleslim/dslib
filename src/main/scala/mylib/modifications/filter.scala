@@ -13,7 +13,7 @@ import scala.reflect.ClassTag
  * @param EstImpl: o tipo de Estrutura de dados linear que será retornado por filter().
  */
 // T: o tipo de dado guardado pela Estrutura de Dados Linear
-trait filter[T] extends EstLin[T] {
+trait Filter[T] extends EstLin[T] {
   def filter(foo: (T) => Boolean)(implicit ev: ClassTag[T]): EstLin[T] = {            // realiza o comportamento descrito acima
     val estLin = instantiate[T]()                            // instancia uma nova EstImpl
     foreach (

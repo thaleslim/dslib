@@ -11,7 +11,7 @@ import contracts.{Node, EstLin}
  *  @see mylib/contracts/static.scala
  * @author Rafael G. de Paulo
  */
-trait linked[T, ImpNode <: Node[T, ImpNode]] extends EstLin[T] {
+trait Linked[T, ImpNode <: Node[T, ImpNode]] extends EstLin[T] {
   /**
    * Pega o primeiro nó da estrutura. a própria implementação da Estrutura
    *  define qual é o primeiro nó
