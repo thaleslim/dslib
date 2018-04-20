@@ -3,8 +3,7 @@ package contracts
 
 /**
  *  Classe abstrata que define o contrato de um
- * Node que contém um valor de T e uma
- * referencia ao próximo Node
+ * Node que contém um valor de T e uma referencia ao próximo Node
  *
  * @author Rafael G. de Paulo
  */

@@ -5,13 +5,12 @@ import scala.reflect.ClassTag
 
 /**
  *  Trait que define a habilidade de usar filter()
- * em uma Estrutura de Dados linear. Usando filter()
- * se pode filtrar uma Estrutura Linear para criar
- * e retornar uma nova Estrutura de Dados linear do
- * mesmo tipo, contendo somente os valores da primeira
- * que forem aceitos pela função passada como argumento
+ * em uma Estrutura de Dados linear. 
  * 
  * @author Rafael G. de Paulo
+ *
+ * @param T: o tipo de dado guardado pela Estrutura de Dados Linear.
+ * @param EstImpl: o tipo de Estrutura de dados linear que será retornado por filter().
  */
 // T: o tipo de dado guardado pela Estrutura de Dados Linear
 trait filter[T] extends EstLin[T] {

@@ -15,6 +15,9 @@ import scala.reflect.ClassTag
  * aplicada aos valores guardados na Estrutura Linear
  *
  * @author Rafael G. de Paulo
+ *
+ * @param T: o tipo de dado guardado pela Estrutura de Dados Linear
+ * @param EstImpl: o tipo de Estrutura de dados linear que será retornado por map()
  */
 // T: o tipo de dado guardado pela Estrutura de Dados Linear
 trait map[T] extends EstLin[T] {
