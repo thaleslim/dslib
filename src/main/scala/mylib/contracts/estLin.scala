@@ -53,4 +53,9 @@ abstract class EstLin[T] {
    * Executa a função inserida em cada elemento da estrutura linear 
    */
   def foreach(foo: (T) => Unit): Unit
+
+  /**
+   * Pega um Iterator da Estrutura Linear
+   */
+  def getIterator(): Iterator[T]
 }

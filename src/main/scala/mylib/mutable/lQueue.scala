@@ -1,27 +1,23 @@
 package mylib
 package mutable
 
-import modifications._
-import contracts.{EstLin, Node, Queue}
+import mylib.modifications._
+import mylib.contracts._
+import mylib.exceptions._
 import scala.reflect.ClassTag
 
 /**
- * Implementação encadeada de de Queue(fila).
+ * Implementação duplamente encadeada de de Queue(fila).
  *
  * @author Rafael G. de Paulo
  */ 
-case class LQueueNode[T](
-  val _value: T,                              		// o valor do Node
-  var   prev: Option[LQueueNode[T]] = None,				// referência ao Node anterior (mais próximo da cauda)
-  var   next: Option[LQueueNode[T]] = None				// referência ao próximo Node  (mais próximo da cabeça)
-) extends Node[T, LQueueNode[T]]
-
-class LQueue[T](values: T*) extends Queue[T, LQueue[T]]
-with Linked[T, LQueueNode[T]]
+case class LQueue[T](values: T*) extends Queue[T, LQueue[T]]
+with DLinked[T, LQueueNode[T]]
 with Foreach[T, LQueueNode[T]]
 with Reduce[T]
+with Filter[T]
+with Map[T]
 {
-  def instantiate[A: ClassTag](inc: Int): LQueue[A] = new LQueue[A]
   private var _size: Int = 0											// o tamanho da fila
   private var _head: Option[LQueueNode[T]] = None	// referência a cabeça da fila
   private var _tail: Option[LQueueNode[T]] = None	// referência a cauda da fila
@@ -30,6 +26,7 @@ with Reduce[T]
   values foreach { this.push(_) } // colocando todos os argumentos para a LQueue
   /** única parte do Construtor que faz alguma coisa **********************************************************************************************/
 
+  def instantiate[A: ClassTag](inc: Int): LQueue[A] = new LQueue[A]
   def size = _size																// retorna o tamanho da fila
   def push(value: T): Boolean = {                 // coloca um valor em um elemento, e adiciona ele à cauda da fila
     _tail match {
@@ -63,7 +60,42 @@ with Reduce[T]
 		case None => None
 	}
   
-  // def instantiate(): LQueue[T] = new LQueue[T]      // instancia um LQueue[T] e retorna ele
   def next(node: LQueueNode[T])        = node.prev  // retorna o próximo node
-  def firstNode: Option[LQueueNode[T]] = _head      // retorna a cauda da fila (assim foreach itera nela da cabeça a cauda)
+  def prev(node: LQueueNode[T])        = node.next  // retorna o node anterior
+  def firstNode: Option[LQueueNode[T]] = _head      // retorna a cabeça da fila (assim foreach itera nela da cabeça a cauda)
+  def lastNode:  Option[LQueueNode[T]] = _tail      // retorna a cauda da fila
+  
+  override def getIterator(): LQueueIterator[T] = firstNode match {
+    case Some(head) => LQueueIterator[T](this, head)    // se a fila não está vazia
+    case None       => throw EmptyEDIterator("Tentativa de inicializar um iterator em um LQueue vazio")
+  }
+}
+
+case class LQueueNode[T](
+  val _value: T,                              		// o valor do Node
+  var   prev: Option[LQueueNode[T]] = None,				// referência ao Node anterior (mais próximo da cauda)
+  var   next: Option[LQueueNode[T]] = None				// referência ao próximo Node  (mais próximo da cabeça)
+) extends DNode[T, LQueueNode[T]]
+
+case class LQueueIterator[T](
+  private val queue: LQueue[T],
+  private val node:  LQueueNode[T]
+) extends DIterator[T](queue) {
+  def value: T = node.value
+  def hasPrev: Boolean = node.next match {
+    case Some(aNode) => true
+    case None        => false
+  }
+  def hasNext: Boolean = node.prev match {
+    case Some(aNode) => true
+    case None        => false
+  }
+  def prev(): Option[LQueueIterator[T]] = node.next match {
+    case Some(prevNode) => Some(LQueueIterator[T](queue, prevNode))
+    case None           => None
+  }
+  def next(): Option[LQueueIterator[T]] = node.prev match {
+    case Some(nextNode) => Some(LQueueIterator[T](queue, nextNode))
+    case None           => None
+  }
 }

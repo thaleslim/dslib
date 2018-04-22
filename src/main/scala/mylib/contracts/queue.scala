@@ -6,7 +6,8 @@ package contracts
  *
  * @author Rafael G. de Paulo
  */
-abstract class Queue[T, QueueImpl <: Queue[T, QueueImpl]] extends EstLin[T] { this: QueueImpl =>
+abstract class Queue[T,
+ QueueImpl <: Queue[T, QueueImpl]] extends EstLin[T] { this: QueueImpl =>
 
   /**
    * Adiciona um valor do tipo T a fila. Funciona de forma FIFO. Ou seja,
