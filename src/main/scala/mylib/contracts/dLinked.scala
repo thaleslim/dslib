@@ -17,7 +17,7 @@ trait DLinked[T, ImpNode <: DNode[T, ImpNode]] extends Linked[T, ImpNode] {
    * @return Some(ImpNode) se a EstLin[T] não estiver vazia
    * @return None          se a EstLin[T] estiver vazia
    */
-  def lastNode: Option[ImpNode]
+  protected def lastNode: Option[ImpNode]
 
   /**
    * Pega o elemento anterior da estrutura
@@ -28,5 +28,5 @@ trait DLinked[T, ImpNode <: DNode[T, ImpNode]] extends Linked[T, ImpNode] {
    * @return None          se o node é o último da Estrutura Linear
    *   
    */
-  def prev(node: ImpNode): Option[ImpNode]  // segua a estrutura na ordem que ela preferir
+  protected def prev(node: ImpNode): Option[ImpNode]  // segua a estrutura na ordem que ela preferir
 }

@@ -9,8 +9,6 @@ import scala.reflect.ClassTag
  * 
  * @author Rafael G. de Paulo
  *
- * @param T: o tipo de dado guardado pela Estrutura de Dados Linear.
- * @param EstImpl: o tipo de Estrutura de dados linear que será retornado por filter().
  */
 // T: o tipo de dado guardado pela Estrutura de Dados Linear
 trait Filter[T] extends EstLin[T] {

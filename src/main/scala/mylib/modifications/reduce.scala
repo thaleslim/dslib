@@ -14,8 +14,6 @@ import contracts.EstLin
  * 
  * @author Rafael G. de Paulo
  *
- * @param T: o tipo de dado guardado pela Estrutura de Dados Linear
- * @param EstImpl: o tipo de Estrutura de dados linear que será retornado por reduce()
  */
  
 trait Reduce[T] extends EstLin[T] {

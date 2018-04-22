@@ -1,4 +1,6 @@
 package mylib
 package exceptions
 
-case class EmptyEDIterator(msg: String) extends Exception(msg)
+class EmptyEDIterator(msg: String)  extends Exception(msg)
+class NegativeIndex(msg: String)    extends Exception(msg)
+class ShouldntExecute(msg: String)  extends Exception(msg)

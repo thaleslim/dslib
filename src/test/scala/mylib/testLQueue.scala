@@ -87,7 +87,7 @@ class testQueue extends FlatSpec with Matchers {
 
         myQueue.reduce[String](""){ _ + _ + "-" } should be ("1-2-3-")
     }
-    it should "work with iterators" in {
+    it should "work with iterators traversing it front-to-back" in {
         val myQueue    = LQueue[Int](1, 2, 3)
         var myIterator = myQueue.getIterator()
 
@@ -112,5 +112,44 @@ class testQueue extends FlatSpec with Matchers {
         myIterator.value should be (3)
         myIterator.hasNext should be (false)
         myIterator.hasPrev should be (true)
+    }
+    
+    it should "work with iterators traversing it back-to-front" in {
+        val myQueue    = LQueue[Int](1, 2, 3)
+        var myIterator = myQueue.getIterator(myQueue.size - 1)
+
+        myIterator.value should be (3)
+        myIterator.hasNext should be (false)
+        myIterator.hasPrev should be (true)
+
+        myIterator.prev match {
+            case Some(iterator) => myIterator = iterator
+            case None           => 
+        }
+        
+        myIterator.value should be (2)
+        myIterator.hasNext should be (true)
+        myIterator.hasPrev should be (true)
+
+        myIterator.prev match {
+            case Some(iterator) => myIterator = iterator
+            case None           => 
+        }
+        
+        myIterator.value should be (1)
+        myIterator.hasNext should be (true)
+        myIterator.hasPrev should be (false)
+    }
+    it should "work with iterators starting at any position from 0 onwards" in {
+        val myQueue    = LQueue[Int](1, 2, 3)
+
+        myQueue.getIterator(0).value should be (1)
+        myQueue.getIterator(1).value should be (2)
+        myQueue.getIterator(2).value should be (3)
+        myQueue.getIterator(3).value should be (1)
+        myQueue.getIterator(4).value should be (2)
+        myQueue.getIterator(5).value should be (3)
+    }
+    it should "throw an exception when initializing an iterator with a negative index" in {
     }
 }

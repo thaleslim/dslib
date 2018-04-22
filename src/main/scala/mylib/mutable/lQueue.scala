@@ -13,7 +13,7 @@ import scala.reflect.ClassTag
  */ 
 case class LQueue[T](values: T*) extends Queue[T, LQueue[T]]
 with DLinked[T, LQueueNode[T]]
-with Foreach[T, LQueueNode[T]]
+with Foreach[T]
 with Reduce[T]
 with Filter[T]
 with Map[T]
@@ -28,6 +28,7 @@ with Map[T]
 
   def instantiate[A: ClassTag](inc: Int): LQueue[A] = new LQueue[A]
   def size = _size																// retorna o tamanho da fila
+  def isEmpty = size == 0
   def push(value: T): Boolean = {                 // coloca um valor em um elemento, e adiciona ele à cauda da fila
     _tail match {
       case Some(node) => {                        // fila não-vazia
@@ -64,10 +65,25 @@ with Map[T]
   def prev(node: LQueueNode[T])        = node.next  // retorna o node anterior
   def firstNode: Option[LQueueNode[T]] = _head      // retorna a cabeça da fila (assim foreach itera nela da cabeça a cauda)
   def lastNode:  Option[LQueueNode[T]] = _tail      // retorna a cauda da fila
-  
-  override def getIterator(): LQueueIterator[T] = firstNode match {
-    case Some(head) => LQueueIterator[T](this, head)    // se a fila não está vazia
-    case None       => throw EmptyEDIterator("Tentativa de inicializar um iterator em um LQueue vazio")
+
+  override def getIterator(ind: Int): LQueueIterator[T] = {
+    if (ind < 0)
+      throw new NegativeIndex("indice negativo entrado em LQueue.getIterator")
+
+    def getCorrectNode(i: Int, node: LQueueNode[T]): LQueueNode[T] = i match {
+      case 0   => node
+      case num => node.prev match {
+        case Some(nextNode) => getCorrectNode(i - 1, nextNode)
+        case None => {
+          throw new ShouldntExecute("LQueue.getIterator() poorly implemented")    // não deve nunca acontecer
+        }
+      }
+    }
+
+    _head match {
+      case None => throw new EmptyEDIterator("tentando criar Iterator para um LQueue vazio")
+      case Some(node) => LQueueIterator[T](this, getCorrectNode(ind % size, node))
+    }
   }
 }
 

@@ -23,7 +23,7 @@ trait Linked[T, ImpNode <: Node[T, ImpNode]] extends EstLin[T] {
    * @return Some(ImpNode) se a EstLin[T] não estiver vazia
    * @return None          se a EstLin[T] estiver vazia
    */
-  def firstNode: Option[ImpNode]
+  protected def firstNode: Option[ImpNode]
 
   /**
    * Pega o próximo elemento da estrutura
@@ -34,5 +34,5 @@ trait Linked[T, ImpNode <: Node[T, ImpNode]] extends EstLin[T] {
    * @return None          se o node é o último da Estrutura Linear
    *   
    */
-  def next(node: ImpNode): Option[ImpNode]  // segua a estrutura na ordem que ela preferir
+  protected def next(node: ImpNode): Option[ImpNode]  // segua a estrutura na ordem que ela preferir
 }

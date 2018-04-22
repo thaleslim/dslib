@@ -56,6 +56,13 @@ abstract class EstLin[T] {
 
   /**
    * Pega um Iterator da Estrutura Linear
+   *
+   * @param ind indice base-0 de em qual valor começar.
    */
-  def getIterator(): Iterator[T]
+  def getIterator(ind: Int = 0): Iterator[T]
+
+  /**
+   * Checa se a Estrutura Linear está vazia ou não
+   */
+  def isEmpty: Boolean
 }

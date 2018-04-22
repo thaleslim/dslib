@@ -9,6 +9,9 @@ import contracts.EstLin
  * OBS: se uma EslLin[T] não mixar "static", ela DEVE mixar "linked", e vice-versa
  *  @see mylib/contracts/linked.scala
  *
+ * OBS2: apesar do DEVE ali em cima, até onde o meu conhecimento de Scala vai, não
+ *  tem como forçar o cliente que for implementar uma EstLin de mixar um dos dois
+ *
  * @author Rafael G. de Paulo
  */
 trait Static[T] extends EstLin[T] {
