@@ -40,9 +40,9 @@ abstract class EstLin[T] {
   def size: Int
   
   /**
-   * Insere um valor na estrutura linear. retorna true se conseguiu inserir, false se não deu, por não ter mais espaço (só acontece em EstLin não-encadeadas)
+   * Insere um valor na estrutura linear.
    */
-  def push(value: T): Boolean
+  def push(value: T): Unit
   
   /**
    * Remove um valor da estrutura linear

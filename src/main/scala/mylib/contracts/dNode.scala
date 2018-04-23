@@ -8,7 +8,7 @@ package contracts
  *
  * @author Rafael G. de Paulo
  */
-abstract class DNode[T, NodeType <: DNode[T, NodeType]] extends Node[T, NodeType] {
+abstract class DNode[T, NodeType <: DNode[T, NodeType]] extends Node[T, NodeType] { this: NodeType =>
   /**
    * Referência ao Node anterior
    */

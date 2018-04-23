@@ -6,8 +6,7 @@ package contracts
  *
  * @author Rafael G. de Paulo
  */
-abstract class Queue[T,
- QueueImpl <: Queue[T, QueueImpl]] extends EstLin[T] { this: QueueImpl =>
+abstract class Queue[T] extends EstLin[T] {
 
   /**
    * Adiciona um valor do tipo T a fila. Funciona de forma FIFO. Ou seja,
@@ -18,7 +17,7 @@ abstract class Queue[T,
    *
    * @return false se a implementação é estática, e a fila já estava cheia. Em qualquer outra situação, true
    */
-  def push(value: T): Boolean
+  def push(value: T): Unit
 
   /**
    * retira um elemento da fila, e retorna seu valor. caso esteja vazia, não altera ela e retorna None

@@ -12,6 +12,12 @@ import mylib.contracts._
  * @author Rafael G. de Paulo
  */
 abstract class DIterator[T](private val estLin: EstLin[T]) extends Iterator[T](estLin) {
-  def hasPrev: Boolean                    // checa se tem um elemento anterior
-  def prev: Option[Iterator[T]]  // pega o elemento anterior
+  /**
+   * Checa se tem um elemento anterior
+   */
+  def hasPrev: Boolean
+  /**
+   * Pega o elemento anterior
+   */
+  def prev: Option[Iterator[T]]
 }

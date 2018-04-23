@@ -7,7 +7,7 @@ package contracts
  *
  * @author Rafael G. de Paulo
  */
-abstract class Node[T, NodeType <: Node[T, NodeType]] {
+abstract class Node[T, NodeType <: Node[T, NodeType]] { this: NodeType =>
   /**
    * Referência ao próximo Node
    */

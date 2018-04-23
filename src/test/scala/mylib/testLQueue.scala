@@ -54,7 +54,7 @@ class testQueue extends FlatSpec with Matchers {
     }
     it should "result in a LQueue that pops 2, 4, 6 after initializing as LQueue[Int](1, 2, 3) and calling map(_ * 2) in a LQueue" in {
         val myQueue = LQueue[Int](1, 2, 3)
-        val mappedQueue = myQueue.map(_ * 2)
+        val mappedQueue = myQueue.map[Int](_ * 2)
 
         mappedQueue.pop() should be (Some(2))
         mappedQueue.pop() should be (Some(4))
@@ -69,23 +69,23 @@ class testQueue extends FlatSpec with Matchers {
         mappedQueue.pop() should be (Some("|.6.|"))
     }
     it should "result in a LQueue that pops 1, 3 after initializing as LQueue[Int](1, 2, 3, 4) and calling filter(_ % 2 == 1) in a LQueue" in {
-        val myQueue = LQueue[Int](1, 2, 3)
+        val myQueue = LQueue[Int](1, 2, 3, 4)
 
         val filterQueue = myQueue.filter(_ % 2 == 1)
 
         filterQueue.pop() should be (Some(1))
         filterQueue.pop() should be (Some(3))
     }
+    it should "result in \"1-2-3-\" after initializing as LQueue[Int](1, 2, 3) and calling reduce(\"\"){ _ + _ + \"-\"}" in {
+        val myQueue = LQueue[Int](1, 2, 3)
+
+        myQueue.reduce[String](""){ _ + _ + "-" } should be ("1-2-3-")
+    }
     it should "throw EmptyEDIterator exception when creating iterator for empty LQueue" in {
         val myQueue    = LQueue[Int]()
         intercept[EmptyEDIterator]{
             val myIterator = myQueue.getIterator()
         }
-    }
-    it should "result in \"1-2-3-\" after initializing as LQueue[Int](1, 2, 3) and calling reduce(\"\"){ _ + _ + \"-\"}" in {
-        val myQueue = LQueue[Int](1, 2, 3)
-
-        myQueue.reduce[String](""){ _ + _ + "-" } should be ("1-2-3-")
     }
     it should "work with iterators traversing it front-to-back" in {
         val myQueue    = LQueue[Int](1, 2, 3)
@@ -150,6 +150,13 @@ class testQueue extends FlatSpec with Matchers {
         myQueue.getIterator(4).value should be (2)
         myQueue.getIterator(5).value should be (3)
     }
-    it should "throw an exception when initializing an iterator with a negative index" in {
+    it should "get the last item on the LQueue if the Iterator is initialized with -1" in {
+        // work in progress ----------------------------------------------------------------------------
+        val myQueue    = LQueue[Int](1, 2, 3)
+
+        intercept[NegativeIndex]{
+            val myIterator = myQueue.getIterator(-1)
+        }
+        // work in progress ----------------------------------------------------------------------------
     }
 }
