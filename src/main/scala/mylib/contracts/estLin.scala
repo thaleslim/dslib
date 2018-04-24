@@ -57,7 +57,11 @@ abstract class EstLin[T] {
   /**
    * Pega um Iterator da Estrutura Linear
    *
-   * @param ind indice base-0 de em qual valor começar.
+   * @param ind indice base-0 de em qual valor começar. Se ind < 0,
+   *   o valor em que o Iterator começa é contado de trás pra frente.
+   *   Ex: getIterator(-1) retorna um iterator que aponta pro último
+   *   dado, e getIterator(-2) retorna um iterator que aponta pro
+   *   penúltimo dado, etc.
    */
   def getIterator(ind: Int = 0): Iterator[T]
 
