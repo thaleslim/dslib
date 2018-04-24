@@ -151,12 +151,16 @@ class testQueue extends FlatSpec with Matchers {
         myQueue.getIterator(5).value should be (3)
     }
     it should "get the last item on the LQueue if the Iterator is initialized with -1" in {
-        // work in progress ----------------------------------------------------------------------------
         val myQueue    = LQueue[Int](1, 2, 3)
 
-        intercept[NegativeIndex]{
-            val myIterator = myQueue.getIterator(-1)
-        }
-        // work in progress ----------------------------------------------------------------------------
+        myQueue.getIterator(-1).value should be (3)
+    }
+    it should "work with negative indexes in getIterator()" in {
+        val myQueue    = LQueue[Int](1, 2, 3)
+
+        myQueue.getIterator(-1).value should be (3)
+        myQueue.getIterator(-2).value should be (2)
+        myQueue.getIterator(-3).value should be (1)
+        myQueue.getIterator(-4).value should be (3)
     }
 }

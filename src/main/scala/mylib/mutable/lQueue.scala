@@ -66,26 +66,32 @@ with Map[T]
   def lastNode:  Option[LQueueNode[T]] = _tail      // retorna a cauda da fila
 
   override def getIterator(ind: Int): LQueueIterator[T] = {
-    // if (ind < 0)
-    //   throw new NegativeIndex("indice negativo entrado em LQueue.getIterator")
-
-    def getCorrectNode(i: Int, node: LQueueNode[T]): LQueueNode[T] = (i compare 0) match {
+    
+    def getCorrectNode(i: Int, node: LQueueNode[T], fwd: Boolean): LQueueNode[T] = 
+    (i compare 0) match {
       case -1 => throw new NegativeIndex("LQueue Iterator inicializado com indice negativo") // placeholder
       case  0 => node
-      case  1 => node.prev match {
-        case Some(nextNode) => getCorrectNode(i - 1, nextNode)
+      case  1 => (if (fwd) node.prev else node.next) match {
+        case Some(nextNode) => getCorrectNode(i - 1, nextNode, fwd)
         case None => {
           throw new ShouldntExecute("LQueue.getIterator() poorly implemented")    // não deve nunca acontecer
         }
       }
     }
 
-    _head match {
-      case None => throw new EmptyEDIterator("tentando criar Iterator para um LQueue vazio")
-      case Some(node) =>  {
-          LQueueIterator[T](this, getCorrectNode(ind % size, node))
+    if (ind >= 0) {
+      _head match {
+        case None       => throw new EmptyEDIterator("tentando criar Iterator para um LQueue vazio")
+        case Some(node) => LQueueIterator[T](this, getCorrectNode(ind % size, node, true))
       }
     }
+    else {
+      _tail match {
+        case None       => throw new EmptyEDIterator("tentando criar Iterator para um LQueue vazio")
+        case Some(node) => LQueueIterator[T](this, getCorrectNode((-ind -1) % size, node, false))
+      }
+    }
+    
   }
 }
 
