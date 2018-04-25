@@ -15,5 +15,5 @@ abstract class Iterator[T](private val estLin: EstLin[T]) {
   def value: T                            // pega o valor atual
 
   def hasNext: Boolean                    // checa se tem um próximo elemento
-  def next: Option[Iterator[T]]           // pega o próximo elemento
+  def next: Unit                          // faz o Iterator apontar para o próximo elemento
 }

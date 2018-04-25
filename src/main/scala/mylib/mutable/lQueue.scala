@@ -103,7 +103,7 @@ case class LQueueNode[T](
 
 case class LQueueIterator[T](
   private val queue: LQueue[T],
-  private val node:  LQueueNode[T]
+  private var node:  LQueueNode[T]
 ) extends DIterator[T](queue) {
   def value: T = node.value
   def hasPrev: Boolean = node.next match {
@@ -114,12 +114,16 @@ case class LQueueIterator[T](
     case Some(aNode) => true
     case None        => false
   }
-  def prev(): Option[LQueueIterator[T]] = node.next match {
-    case Some(prevNode) => Some(LQueueIterator[T](queue, prevNode))
-    case None           => None
+  def prev() {
+    (node.next) match {
+      case Some(prevNode) => node = prevNode
+      case None           => throw new IteratorOutOfBounds("tentando dar prev() em um iterator no primeiro elemento")
+    }
   }
-  def next(): Option[LQueueIterator[T]] = node.prev match {
-    case Some(nextNode) => Some(LQueueIterator[T](queue, nextNode))
-    case None           => None
+  def next() {
+    (node.prev) match {
+      case Some(prevNode) => node = prevNode;
+      case None           => throw new IteratorOutOfBounds("tentando dar next() em um iterator no primeiro elemento")
+    }
   }
 }

@@ -17,7 +17,7 @@ abstract class DIterator[T](private val estLin: EstLin[T]) extends Iterator[T](e
    */
   def hasPrev: Boolean
   /**
-   * Pega o elemento anterior
+   * faz o Iterator apontar para o elemento anterior
    */
-  def prev: Option[Iterator[T]]
+  def prev: Unit
 }

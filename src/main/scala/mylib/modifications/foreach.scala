@@ -17,9 +17,9 @@ trait Foreach[T] extends EstLin[T] {
 
     def iterate(iter: Iterator[T]) {
       foo(iter.value)                             // execute foo
-      iter.next match {
-        case Some(nextIter) => iterate(nextIter)  // continuar a iterar na EstLin
-        case None           =>                    // acabou a EstLin
+      if (iter.hasNext) {
+        iter.next
+        iterate(iter)
       }
     }
 
