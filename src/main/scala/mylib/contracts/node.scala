@@ -11,7 +11,7 @@ abstract class Node[T, NodeType <: Node[T, NodeType]] { this: NodeType =>
   /**
    * Referência ao próximo Node
    */
-  protected var next: Option[NodeType]
+  var next: Option[NodeType]
   
   /**
    * O valor que o Node contém
@@ -23,4 +23,6 @@ abstract class Node[T, NodeType <: Node[T, NodeType]] { this: NodeType =>
    * @return o valor do tipo T guardado dentro do Node
    */
   def value: T = _value
+
+  override def toString: String = value.toString
 }

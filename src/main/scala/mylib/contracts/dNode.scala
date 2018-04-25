@@ -12,5 +12,5 @@ abstract class DNode[T, NodeType <: DNode[T, NodeType]] extends Node[T, NodeType
   /**
    * Referência ao Node anterior
    */
-  protected var prev: Option[NodeType]
+  var prev: Option[NodeType]
 }

@@ -45,6 +45,81 @@ class testQueue extends FlatSpec with Matchers {
         myQueue.tail should be (Some(3))
         myQueue.size should be (3)
     }
+    it should "throw EmptyEDIterator exception when creating iterator for empty LQueue" in {
+        val myQueue    = LQueue[Int]()
+        intercept[EmptyEDIterator]{
+            val myIterator = myQueue.getIterator()
+        }
+    }
+    it should "get the last item on the LQueue if the Iterator is initialized with -1" in {
+        val myQueue = LQueue[Int](1, 2, 3)
+
+        myQueue.getIterator(-1).value should be (3)
+    }
+    it should "work with iterators starting at any position (negative, 0 or positive)" in {
+        val myQueue = LQueue[Int](1, 2, 3)
+
+        myQueue.getIterator(0) .value should be (1)
+        myQueue.getIterator(1) .value should be (2)
+        myQueue.getIterator(2) .value should be (3)
+        myQueue.getIterator(3) .value should be (1)
+        myQueue.getIterator(4) .value should be (2)
+        myQueue.getIterator(5) .value should be (3)
+        myQueue.getIterator(-1).value should be (3)
+        myQueue.getIterator(-2).value should be (2)
+        myQueue.getIterator(-3).value should be (1)
+        myQueue.getIterator(-4).value should be (3)
+    }
+    it should "work with iterators traversing it front-to-back" in {
+        val myQueue    = LQueue[Int](1, 2, 3)
+        val myIterator = myQueue.getIterator()
+
+        myIterator.value should be (1)
+        myIterator.hasNext should be (true)
+        myIterator.hasPrev should be (false)
+        myIterator.next
+        
+        var x = myIterator.getNode
+        x.value should be (2)
+        x.prev match {
+            case Some(node) => node.value should be (1)
+            case None       => true should be (false)
+        }
+        myIterator.value should be (2)
+        myIterator.hasNext should be (true)
+
+        myIterator.getNode.prev match {
+            case Some(prev) => println("prev.value: "+ prev.value)
+            case None       => println("wtf")
+        }
+        myIterator.hasPrev should be (true)
+        
+        // myIterator.next
+        
+        // myIterator.value should be (3)
+        // myIterator.hasNext should be (false)
+        // myIterator.hasPrev should be (true)
+    }
+    // it should "work with iterators traversing it back-to-front" in {
+    //     val myQueue    = LQueue[Int](1, 2, 3)
+    //     val myIterator = myQueue.getIterator(myQueue.size - 1)
+
+    //     myIterator.value should be (3)
+    //     myIterator.hasNext should be (false)
+    //     myIterator.hasPrev should be (true)
+
+    //     myIterator.prev
+        
+    //     myIterator.value should be (2)
+    //     myIterator.hasNext should be (true)
+    //     myIterator.hasPrev should be (true)
+
+    //     myIterator.prev
+        
+    //     myIterator.value should be (1)
+    //     myIterator.hasNext should be (true)
+    //     myIterator.hasPrev should be (false)
+    // }
     it should "result in 6 after initializing as LQueue[Int](1, 2, 3) and calling foreach(sum += _)" in {
         val myQueue = LQueue[Int](1, 2, 3)
         var sum: Int = 0
@@ -80,68 +155,5 @@ class testQueue extends FlatSpec with Matchers {
         val myQueue = LQueue[Int](1, 2, 3)
 
         myQueue.reduce[String](""){ _ + _ + "-" } should be ("1-2-3-")
-    }
-    it should "throw EmptyEDIterator exception when creating iterator for empty LQueue" in {
-        val myQueue    = LQueue[Int]()
-        intercept[EmptyEDIterator]{
-            val myIterator = myQueue.getIterator()
-        }
-    }
-    it should "work with iterators traversing it front-to-back" in {
-        val myQueue    = LQueue[Int](1, 2, 3)
-        val myIterator = myQueue.getIterator()
-
-        myIterator.value should be (1)
-        myIterator.hasNext should be (true)
-        myIterator.hasPrev should be (false)
-        myIterator.next
-        
-        myIterator.value should be (2)
-        myIterator.hasNext should be (true)
-        myIterator.hasPrev should be (true)
-        myIterator.next
-        
-        myIterator.value should be (3)
-        myIterator.hasNext should be (false)
-        myIterator.hasPrev should be (true)
-    }
-    it should "get the last item on the LQueue if the Iterator is initialized with -1" in {
-        val myQueue = LQueue[Int](1, 2, 3)
-
-        myQueue.getIterator(-1).value should be (3)
-    }
-    it should "work with iterators starting at any position (negative, 0 or positive)" in {
-        val myQueue = LQueue[Int](1, 2, 3)
-
-        myQueue.getIterator(0) .value should be (1)
-        myQueue.getIterator(1) .value should be (2)
-        myQueue.getIterator(2) .value should be (3)
-        myQueue.getIterator(3) .value should be (1)
-        myQueue.getIterator(4) .value should be (2)
-        myQueue.getIterator(5) .value should be (3)
-        myQueue.getIterator(-1).value should be (3)
-        myQueue.getIterator(-2).value should be (2)
-        myQueue.getIterator(-3).value should be (1)
-        myQueue.getIterator(-4).value should be (3)
-    }
-    it should "work with iterators traversing it back-to-front" in {
-        val myQueue    = LQueue[Int](1, 2, 3)
-        val myIterator = myQueue.getIterator(myQueue.size - 1)
-
-        myIterator.value should be (3)
-        myIterator.hasNext should be (false)
-        myIterator.hasPrev should be (true)
-
-        myIterator.prev
-        
-        myIterator.value should be (2)
-        myIterator.hasNext should be (true)
-        myIterator.hasPrev should be (true)
-
-        myIterator.prev
-        
-        myIterator.value should be (1)
-        myIterator.hasNext should be (true)
-        myIterator.hasPrev should be (false)
     }
 }
