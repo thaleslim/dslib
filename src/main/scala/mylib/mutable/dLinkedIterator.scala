@@ -15,11 +15,11 @@ import mylib.exceptions._
 // T: O tipo de dado que a Estrutura Linear Guarda
 // NodeImp: O tipo do Node que a Estrutura Linear usa
 class DLinkedIterator[T, NodeImp <: DNode[T, NodeImp]](
-  private val estLin: DLinked[T, NodeImp],
-  private var node:   NodeImp
-) extends LinkedIterator[T, NodeImp](estLin, node) {
+  estLinRef: DLinked[T, NodeImp],
+  startNode:   NodeImp
+) extends LinkedIterator[T, NodeImp](estLinRef, startNode) {
 
-  def hasPrev: Boolean = getNode.prev match {
+  def hasPrev: Boolean = node.prev match {
     case Some(aNode) => true
     case None        => false
   }
@@ -30,4 +30,5 @@ class DLinkedIterator[T, NodeImp <: DNode[T, NodeImp]](
       case None           => throw new IteratorOutOfBounds("tentando dar prev() em um iterator no primeiro elemento")
     }
   }
+  
 }

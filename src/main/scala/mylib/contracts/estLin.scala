@@ -65,6 +65,8 @@ abstract class EstLin[T] {
    */
   def getIterator(ind: Int = 0): Iterator[T]
 
+  protected def getIteratorIndex(ind: Int = 0): Int = if (ind < 0) ind % size + size else ind % size
+
   /**
    * Checa se a Estrutura Linear está vazia ou não
    */

@@ -93,6 +93,6 @@ case class LQueueNode[T](
 ) extends DNode[T, LQueueNode[T]]
 
 case class LQueueIterator[T](
-  private val queue: LQueue[T],
-  private var node:  LQueueNode[T]
-) extends DLinkedIterator[T, LQueueNode[T]](queue, node)
+  queue: LQueue[T],
+  startNode:  LQueueNode[T]
+) extends DLinkedIterator[T, LQueueNode[T]](queue, startNode)

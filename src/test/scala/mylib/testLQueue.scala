@@ -77,49 +77,39 @@ class testQueue extends FlatSpec with Matchers {
         myIterator.value should be (1)
         myIterator.hasNext should be (true)
         myIterator.hasPrev should be (false)
+
         myIterator.next
         
-        var x = myIterator.getNode
-        x.value should be (2)
-        x.prev match {
-            case Some(node) => node.value should be (1)
-            case None       => true should be (false)
-        }
         myIterator.value should be (2)
         myIterator.hasNext should be (true)
-
-        myIterator.getNode.prev match {
-            case Some(prev) => println("prev.value: "+ prev.value)
-            case None       => println("wtf")
-        }
         myIterator.hasPrev should be (true)
         
-        // myIterator.next
+        myIterator.next
         
-        // myIterator.value should be (3)
-        // myIterator.hasNext should be (false)
-        // myIterator.hasPrev should be (true)
+        myIterator.value should be (3)
+        myIterator.hasNext should be (false)
+        myIterator.hasPrev should be (true)
     }
-    // it should "work with iterators traversing it back-to-front" in {
-    //     val myQueue    = LQueue[Int](1, 2, 3)
-    //     val myIterator = myQueue.getIterator(myQueue.size - 1)
+    it should "work with iterators traversing it back-to-front" in {
+        val myQueue    = LQueue[Int](1, 2, 3)
+        val myIterator = myQueue.getIterator(myQueue.size - 1)
 
-    //     myIterator.value should be (3)
-    //     myIterator.hasNext should be (false)
-    //     myIterator.hasPrev should be (true)
-
-    //     myIterator.prev
+        myIterator.value should be (3)
+        myIterator.hasNext should be (false)
+        myIterator.hasPrev should be (true)
         
-    //     myIterator.value should be (2)
-    //     myIterator.hasNext should be (true)
-    //     myIterator.hasPrev should be (true)
-
-    //     myIterator.prev
+        myIterator.prev
         
-    //     myIterator.value should be (1)
-    //     myIterator.hasNext should be (true)
-    //     myIterator.hasPrev should be (false)
-    // }
+        myIterator.value should be (2)
+        myIterator.hasNext should be (true)
+        myIterator.hasPrev should be (true)
+
+        myIterator.prev
+        
+        myIterator.value should be (1)
+        myIterator.hasNext should be (true)
+        myIterator.hasPrev should be (false)
+    }
     it should "result in 6 after initializing as LQueue[Int](1, 2, 3) and calling foreach(sum += _)" in {
         val myQueue = LQueue[Int](1, 2, 3)
         var sum: Int = 0
