@@ -119,15 +119,15 @@ class testQueue extends FlatSpec with Matchers {
     }
     it should "result in a LQueue that pops 2, 4, 6 after initializing as LQueue[Int](1, 2, 3) and calling map(_ * 2) in a LQueue" in {
         val myQueue = LQueue[Int](1, 2, 3)
-        val mappedQueue = myQueue.map[Int](_ * 2)
+        val mappedQueue = myQueue.map(_ * 2)
 
         mappedQueue.pop() should be (Some(2))
         mappedQueue.pop() should be (Some(4))
         mappedQueue.pop() should be (Some(6))
     }
-    it should "result in a LQueue that pops \"|.2.|\", \"|.4.|\", \"|.6.|\" after initializing as LQueue[Int](1, 2, 3) and calling map[String](\"|.\" + 2*_ + \".|\") in a LQueue" in {
+    it should "result in a LQueue that pops \"|.2.|\", \"|.4.|\", \"|.6.|\" after initializing as LQueue[Int](1, 2, 3) and calling map(\"|.\" + 2*_ + \".|\") in a LQueue" in {
         val myQueue = LQueue[Int](1, 2, 3)
-        val mappedQueue = myQueue.map[String]("|." + 2*_ + ".|")
+        val mappedQueue = myQueue.map("|." + 2*_ + ".|")
 
         mappedQueue.pop() should be (Some("|.2.|"))
         mappedQueue.pop() should be (Some("|.4.|"))
@@ -141,9 +141,17 @@ class testQueue extends FlatSpec with Matchers {
         filterQueue.pop() should be (Some(1))
         filterQueue.pop() should be (Some(3))
     }
+    it should "result in a LQueue that pops 2, 4 after initializing as LQueue[Int](1, 2, 3, 4) and calling filterNot(_ % 2 == 1) in a LQueue" in {
+        val myQueue = LQueue[Int](1, 2, 3, 4)
+
+        val filterQueue = myQueue.filterNot(_ % 2 == 1)
+
+        filterQueue.pop() should be (Some(2))
+        filterQueue.pop() should be (Some(4))
+    }
     it should "result in \"1-2-3-\" after initializing as LQueue[Int](1, 2, 3) and calling reduce(\"\"){ _ + _ + \"-\"}" in {
         val myQueue = LQueue[Int](1, 2, 3)
 
-        myQueue.reduce[String](""){ _ + _ + "-" } should be ("1-2-3-")
+        myQueue.reduce(""){ _ + _ + "-" } should be ("1-2-3-")
     }
 }
