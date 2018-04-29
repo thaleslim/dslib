@@ -1,6 +1,8 @@
 package mylib
 package contracts
 
+import scala.reflect.ClassTag
+
 /**
  * Classe abstrata que define o contrato de uma fila (Queue).
  *
@@ -38,4 +40,10 @@ abstract class Queue[T] extends EstLin[T] {
    * retorna a quantidade de elementos atualmente na fila
    */
   def size: Int
+
+  def copy(implicit ev: ClassTag[T]): EstLin[T] = {
+    val copy = instantiate[T](0)
+    foreach {copy.push(_)}
+    copy
+  }
 }

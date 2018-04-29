@@ -33,7 +33,7 @@ abstract class EstLin[T] {
    * Retorna o valor do elemento "final", "último" ou "cauda" da estrutura linear. se existir
    */
   def tail: Option[T]
-  
+
   /**
    * Retorna a quantidade de elementos atualmente na estrutura linear
    */
@@ -53,6 +53,11 @@ abstract class EstLin[T] {
    * Executa a função inserida em cada elemento da estrutura linear 
    */
   def foreach(foo: (T) => Unit): Unit
+
+  /**
+   * Retorna uma cópia dessa EstLin
+   */
+  def copy(implicit ev: ClassTag[T]): EstLin[T]
 
   /**
    * Pega um Iterator da Estrutura Linear

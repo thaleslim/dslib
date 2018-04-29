@@ -16,18 +16,18 @@ case class LStackNode[T](
   var next:   Option[LStackNode[T]] = None
 ) extends Node[T, LStackNode[T]]
  
-case class LStack[T](values: T*) extends Stack[T]
+abstract case class LStack[T](values: T*) extends Stack[T]
 with Linked[T, LStackNode[T]]
 with Filter[T]
 with Foreach[T]
-with Map[T]
+with Mappable[T]
 with Reduce[T]
 {
   private var _head: Option[LStackNode[T]] = None
   private var _tail: Option[LStackNode[T]] = None
   private var _size: Int                   = 0
 
-	def instantiate[A: ClassTag](inc: Int): LStack[A] = new LStack[A]	
+	// def instantiate[A: ClassTag](inc: Int): LStack[A] = new LStack[A]	
 	def size = _size
 	def isEmpty = size == 0
   def head: Option[T] = _head match {
