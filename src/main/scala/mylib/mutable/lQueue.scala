@@ -16,7 +16,7 @@ with DLinked[T, LQueueNode[T]]
 with Foreach[T]
 with Reduce[T]
 with Filter[T]
-with Map[T]
+with Mappable[T]
 {
   private var _size: Int = 0											// o tamanho da fila
   private var _head: Option[LQueueNode[T]] = None	// referência a cabeça da fila

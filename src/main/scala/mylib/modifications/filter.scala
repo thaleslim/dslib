@@ -19,4 +19,12 @@ trait Filter[T] extends EstLin[T] {
     }
     estLin                                                // retorna ela
   }
+
+  def filterNot(foo: (T) => Boolean)(implicit ev: ClassTag[T]): EstLin[T] = {
+    val estLin = instantiate[T]()                         // instancia uma nova EstImpl
+    foreach {
+      (value: T) => if (!foo(value)) estLin.push(value)   // enche a nova estrutura linear com os valores adequados
+    }
+    estLin                                                // retorna ela
+  }
 }
