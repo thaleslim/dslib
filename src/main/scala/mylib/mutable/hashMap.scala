@@ -17,10 +17,11 @@ import scala.reflect.ClassTag
 class HashMap[A, B](
   val maxSize: Int = 1000,
       hashFoo: (A) => Int = (_: A).hashCode()
-) extends Map[A,B]{
+) extends Map[A,B] {
 
   val values = Array.fill[Option[Pair[A, B]]](maxSize){None}
   protected val hashFunc: (A) => Int = hashFoo(_) % maxSize
+
   def this(pairs: (A, B)*) {
     this(1000)
     pairs foreach { insert(_) }

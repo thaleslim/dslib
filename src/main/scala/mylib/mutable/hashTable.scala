@@ -17,8 +17,8 @@ import scala.reflect.ClassTag
  */
 abstract class HashTable[A, B](
   val maxSize: Int = 1000,
-  protected val hashFunc: (A) => Int = (_: A).hashCode())
-extends Map[A,B]{
-
+      hashFoo: (A) => Int = (_: A).hashCode())
+extends Map[A,B] {
+  // val values
   
 }
