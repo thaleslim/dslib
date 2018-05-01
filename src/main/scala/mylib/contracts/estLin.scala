@@ -57,7 +57,7 @@ abstract class EstLin[T] {
   /**
    * Retorna uma cópia dessa EstLin
    */
-  def copy(implicit ev: ClassTag[T]): EstLin[T]
+  def copy(): EstLin[T]
 
   /**
    * Pega um Iterator da Estrutura Linear
