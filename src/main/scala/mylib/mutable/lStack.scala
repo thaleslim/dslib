@@ -33,8 +33,9 @@ with Reduce[T]
 {
 	private var _head: Option[LStackNode[T]] = None
 	private var _tail: Option[LStackNode[T]] = None
-	private var _size: Int                   = values.size
-
+	private var _size: Int                   = 0
+	values foreach {this.push(_)}	
+	
 	def instantiate[A: ClassTag](inc: Int): LStack[A] = new LStack[A]
  /**
 	*@return inteiro _size contendo o tamanho da Stack
