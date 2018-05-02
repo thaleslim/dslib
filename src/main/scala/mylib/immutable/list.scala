@@ -23,11 +23,11 @@ sealed abstract class List[+T] {
     else if (ind > 0) tail.apply(ind - 1)
     else              head
 
-  def size: Int = 1 + tail.size // pega o tamanho da lista
+  def size(): Int = 1 + tail.size // pega o tamanho da lista
 
   def ::[T1 >: T](pref: T1): List[T1] = new ::(pref, this)  // adiciona um elemento ao início da lista
 
-  def invert: List[T] = {                                   // retorna uma lista identica a essa, só que invertida
+  def invert(): List[T] = {                                   // retorna uma lista identica a essa, só que invertida
     def getInvert(in: List[T], out: List[T] = EmptyList): List[T] = {
       in match {
         case EmptyList => out
@@ -50,7 +50,42 @@ sealed abstract class List[+T] {
 
     append(prefInv, this.asInstanceOf[List[T1]])
   }
-} 
+
+  def hasValue[T1 >: T](value: T1): Boolean =
+    if (isEmpty) false
+    else if (head == value) true
+    else tail match {
+      case EmptyList => false
+      case _         => tail.hasValue(value)
+    }
+
+  override def toString =
+    if (isEmpty) "List()"
+    else if (size == 1) "List(" + head.toString + ")"
+    else "List(" + head + tail.giveString
+    
+  private def giveString(): String = ", " + head.toString + 
+    (tail match {
+      case EmptyList => ")"
+      case _         => tail.giveString
+    })
+
+  def getIterator[T1 >: T](): ListIterator[T1] = new ListIterator[T1](this)
+
+  def foreach(foo: (T) => Unit) {
+    val myIter = getIterator()
+    var continue = false
+    if (!isEmpty)
+      do {
+        foo(myIter.value)
+        if (myIter.hasNext()) {
+          continue = true
+          myIter.next()
+        }
+        else continue = false
+      } while (continue)
+  }
+}
 
 // usada para pattern matching (casamento de padrões)
 private case class ::[T](val h: T, private var t: List[T]) extends List[T] {
@@ -66,11 +101,20 @@ object List {
     else               ::(values.head, apply(values.tail: _*))
 }
 
+// usado para iterar em Listas
+class ListIterator[T](var list: List[T]) {
+  def value = list.head
+  def next() =
+    if (list.tail.isEmpty) throw new IteratorOutOfBounds("tentando dar next() em um iterator no ultimo elemento")
+    else list = list.tail
+  def hasNext() = !list.tail.isEmpty
+}
+
 // objeto que representa uma Lista vazia
 case object EmptyList extends List[Nothing]{
-  def tail: List[Nothing]               = throw new NotSuported("tail não suportado para EmptyList()")  
-  def head: Nothing                     = throw new NotSuported("tail não suportado para EmptyList()") 
-  def isEmpty: Boolean                  = true
-  override def apply(ind: Int): Nothing = throw new IndexOutOfBounds("indice em List.apply() maior que o tamanho da Lista")
-  override def size: Int                = 0
+  def tail: List[Nothing]                        = throw new NotSuported("tail não suportado para EmptyList()")  
+  def head: Nothing                              = throw new NotSuported("head não suportado para EmptyList()") 
+  def isEmpty: Boolean                           = true
+  override def apply(ind: Int): Nothing          = throw new IndexOutOfBounds("indice em List.apply() maior que o tamanho da Lista")
+  override def size: Int                         = 0
 }

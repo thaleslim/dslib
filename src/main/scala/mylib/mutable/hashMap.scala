@@ -24,7 +24,7 @@ class HashMap[A, B](
 
   def this(pairs: (A, B)*) {
     this(1000)
-    pairs foreach { insert(_) }
+    insert(pairs: _*)
   }
 
   def insert(pairs: (A, B)*) =
