@@ -87,11 +87,7 @@ with Mappable[T]
 
   override def copy(implicit ev: ClassTag[T]): EstLin[T] = {
     val queue = instantiate[T](0)
-
-    foreach {
-      queue.push(_)
-    }
-
+    foreach { queue.push(_) }
     queue
   }
 }

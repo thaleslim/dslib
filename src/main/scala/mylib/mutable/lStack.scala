@@ -1,5 +1,5 @@
-package mylib
-package mutable
+// package mylib
+// package mutable
 
 import mylib.modifications._
 import mylib.contracts._
@@ -121,3 +121,12 @@ with Reduce[T]
 	
 }
 
+// 	override def map[B: ClassTag](foo: (T) => B): EstLin[B] = {
+//     val stackInv:    Stack[B] = instantiate[B]()
+// 		val stackMapped: Stack[B] = instantiate[B]()
+//     foreach { (value: T) => stackInv push( foo(value) ) }
+//     stackInv foreach {stackMapped.push(_) }
+// 		stackMapped
+// 	}
+	
+// }
