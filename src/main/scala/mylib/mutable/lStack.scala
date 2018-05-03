@@ -1,5 +1,5 @@
-// package mylib
-// package mutable
+package mylib
+package mutable
 
 import mylib.modifications._
 import mylib.contracts._
@@ -34,34 +34,34 @@ with Reduce[T]
 	private var _head: Option[LStackNode[T]] = None
 	private var _tail: Option[LStackNode[T]] = None
 	private var _size: Int                   = 0
-	values foreach {this.push(_)}	
+	values foreach {push(_)}	
 	
 	def instantiate[A: ClassTag](inc: Int): LStack[A] = new LStack[A]
  /**
-	*@return inteiro _size contendo o tamanho da Stack
-	*/
+  *@return inteiro _size contendo o tamanho da Stack
+  */
 	def size = _size
  /**
-	*@return true se a Stack está vazia
-	*/
+  *@return true se a Stack está vazia
+  */
 	def isEmpty = size == 0
  /**
-	*@return Some(valor) correspondente ao topo da Stack ou None se a Stack tiver vazia
-	*/
+  *@return Some(valor) correspondente ao topo da Stack ou None se a Stack tiver vazia
+  */
 	def head: Option[T] = _head match {
 		case None       => None
 		case Some(node) => Some(node.value)
 	}
  /**
-	*@return Some(valor) correspondente ao primeiro item da Stack ou None se a Stack tiver vazia
-	*/
+  *@return Some(valor) correspondente ao primeiro item da Stack ou None se a Stack tiver vazia
+  */
 	def tail: Option[T] = _tail match {
 		case None       => None
 		case Some(node) => Some(node.value)
 	}
  /**
-	*@return Some(valor) correspondente ao topo da Stack ou None se a Stack tiver vazia, retirando o valor e decrementando o tamanho da Stack
-	*/
+  *@return Some(valor) correspondente ao topo da Stack ou None se a Stack tiver vazia, retirando o valor e decrementando o tamanho da Stack
+  */
 	def pop(): Option[T] = _head match {
 		case None       => None
 		case Some(node) => {
@@ -71,8 +71,8 @@ with Reduce[T]
 		}
 	}
  /**
-	*Põe um valor na Stack e incrementa seu tamanho
-	*/
+  *Põe um valor na Stack e incrementa seu tamanho
+  */
 	def push(value: T) {
 		_head match{
 			case Some(node) => {
@@ -80,53 +80,52 @@ with Reduce[T]
 				_size += 1
 			}
 			case None       => {
-				_head = Some(LStackNode[T](value, None))
-				_tail = _head
+				_tail = Some(LStackNode[T](value, None))
+				_head = _tail
 				_size += 1
 			}
 		}  
 	}
  /**
-	*@return Some(valor) igual a _head, se houver
-	*/
+  *@return Some(valor) igual a _head, se houver
+  */
 	def firstNode: Option[LStackNode[T]] = _head
  /**
-	*@return Some(valor) igual a _tail, se houver
-	*/
+  *@return Some(valor) igual a _tail, se houver
+  */
 	def lastNode:  Option[LStackNode[T]] = _tail
  /**
-	*@return Some(LStackNode[T]) apontando para o próximo Node, se houver
-	*/
+  *@return Some(LStackNode[T]) apontando para o próximo Node, se houver
+  */
 	def next(node: LStackNode[T])        = node.next
 
 	  override def getIterator(ind: Int): LStackIterator[T] = {
-    def getCorrectNode(i: Int, node: LStackNode[T], fwd: Boolean): LStackNode[T] = {
-      if (i < 0)
-        getCorrectNode(size + (i % size), node, fwd)
-      else
-        (i % size compare 0) match {
-          case -1 => throw new PoorlyImplemented("LQueue.getIterator() poorly implemented.")     // não deve nunca acontecer
-          case  0 => node
-          case  1 => node.next match {
-            case Some(nextNode) => getCorrectNode(i - 1, nextNode, fwd)
-            case None => throw new PoorlyImplemented("LQueue.getIterator() poorly implemented.") // não deve nunca acontecer
-          }
-        }}
+    	def getCorrectNode(i: Int, node: LStackNode[T], fwd: Boolean): LStackNode[T] = {
+      	if (i < 0)
+      	  getCorrectNode(size + (i % size), node, fwd)
+				else
+        	(i % size compare 0) match {
+          	case -1 => throw new PoorlyImplemented("LStack.getIterator() poorly implemented.")     // não deve nunca acontecer
+          	case  0 => node
+          	case  1 => node.next match {
+           		case Some(nextNode) => getCorrectNode(i - 1, nextNode, fwd)
+           		case None => throw new PoorlyImplemented("LStack.getIterator() poorly implemented.") // não deve nunca acontecer
+          	}
+        	}	
+				}
 
-    _head match {
-      case None       => throw new EmptyEDIterator("tentando criar Iterator para um LQueue vazio")
-      case Some(node) => LStackIterator[T](this, getCorrectNode(ind, node, true))
-    }
-  }
-	
+    		_head match {
+      		case None       => throw new EmptyEDIterator("tentando criar Iterator para um LStack vazio")
+      		case Some(node) => LStackIterator[T](this, getCorrectNode(ind, node, true))
+    		}
+				
+  		}
+	override def map[B: ClassTag](foo: (T) => B): EstLin[B] = {
+    val stackInv:    Stack[B] = instantiate[B]()
+        val stackMapped: Stack[B] = instantiate[B]()
+    foreach { (value: T) => stackInv push( foo(value) ) } // enche a nova estrutura linear com os valores adequados
+    stackInv foreach {stackMapped.push(_) }
+        stackMapped
+    }		
 }
 
-// 	override def map[B: ClassTag](foo: (T) => B): EstLin[B] = {
-//     val stackInv:    Stack[B] = instantiate[B]()
-// 		val stackMapped: Stack[B] = instantiate[B]()
-//     foreach { (value: T) => stackInv push( foo(value) ) }
-//     stackInv foreach {stackMapped.push(_) }
-// 		stackMapped
-// 	}
-	
-// }
