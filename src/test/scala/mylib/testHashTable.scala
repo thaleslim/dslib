@@ -96,15 +96,15 @@ class testHashTable extends FlatSpec with Matchers {
         myHashTable.hasKey("four")  should be (true)
         myHashTable.hasKey("five")  should be (false)
     }
-    it should "work with the hasValue method" in {
+    it should "work with the hasObject method" in {
         val myHashTable = HashTable[String, Int](100)
         myHashTable.insert("one" -> 1, "two" -> 2, "three" -> 3, "four" -> 4)
         
-        myHashTable.hasValue(0)  should be (false)
-        myHashTable.hasValue(1)  should be (true)
-        myHashTable.hasValue(2)  should be (true)
-        myHashTable.hasValue(3)  should be (true)
-        myHashTable.hasValue(4)  should be (true)
-        myHashTable.hasValue(5)  should be (false)
+        myHashTable.hasObject(0)  should be (false)
+        myHashTable.hasObject(1)  should be (true)
+        myHashTable.hasObject(2)  should be (true)
+        myHashTable.hasObject(3)  should be (true)
+        myHashTable.hasObject(4)  should be (true)
+        myHashTable.hasObject(5)  should be (false)
     }
 }

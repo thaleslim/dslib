@@ -14,20 +14,29 @@ import mylib.exceptions._
  * @author Rafael G. de Paulo
  */
 sealed abstract class List[+T] {
-  def head: T         // pega o primeiro elemento da lista
-  def tail: List[T]   // pega o resto da lista, excluindo o primeiro elemento
+  // pega o primeiro elemento da lista
+  def head: T
 
-  def isEmpty: Boolean        // checa se a lista está vazia
-  def apply(ind: Int): T =    // pega o n-ésizmo próximo elemento da lista
+  // pega o resto da lista, excluindo o primeiro elemento
+  def tail: List[T]   
+
+  // checa se a lista está vazia
+  def isEmpty: Boolean
+
+  // pega o n-ésizmo próximo elemento da lista
+  def apply(ind: Int): T =
     if (ind < 0)      throw new NegativeIndex("indice negativo em List.apply()")
     else if (ind > 0) tail.apply(ind - 1)
     else              head
 
-  def size(): Int = 1 + tail.size // pega o tamanho da lista
+  // pega o tamanho da lista
+  def size(): Int = 1 + tail.size 
 
-  def ::[T1 >: T](pref: T1): List[T1] = new ::(pref, this)  // adiciona um elemento ao início da lista
+  // retorna uma nova lista, que é pref concatenado à essa lista
+  def ::[T1 >: T](pref: T1): List[T1] = new ::(pref, this)  
 
-  def invert(): List[T] = {                                   // retorna uma lista identica a essa, só que invertida
+  // retorna uma lista identica a essa, só que invertida
+  def invert(): List[T] = {                                   
     def getInvert(in: List[T], out: List[T] = EmptyList): List[T] = {
       in match {
         case EmptyList => out
@@ -37,41 +46,44 @@ sealed abstract class List[+T] {
     getInvert(this)
   }
 
-  def :::[T1 >: T](pref: List[T1]): List[T1] =              // concatena duas listas
+  // retorna uma nova lista, que é a concatenação dessa lista com uma anterior
+  def :::[T1 >: T](pref: List[T1]): List[T1] =              
     if (isEmpty) pref
     else if (pref isEmpty) this
     else {
-    val prefInv = pref.invert
+      val prefInv = pref.invert
 
-    def append(pre: List[T1], pos: List[T1]): List[T1] = pre match {
-      case EmptyList => pos
-      case ::(h, t)  => append(t, new ::(h, pos))
+      def append(pre: List[T1], pos: List[T1]): List[T1] = pre match {
+        case EmptyList => pos
+        case ::(h, t)  => append(t, new ::(h, pos))
+      }
+
+      append(prefInv, this.asInstanceOf[List[T1]])
     }
 
-    append(prefInv, this.asInstanceOf[List[T1]])
-  }
-
-  def hasValue[T1 >: T](value: T1): Boolean =
+  // checa se a lista possui um valor ou não
+  def hasValue[T1 >: T](value: T1): Boolean =   
     if (isEmpty) false
     else if (head == value) true
-    else tail match {
-      case EmptyList => false
-      case _         => tail.hasValue(value)
-    }
+    else tail.hasValue(value)
 
-  override def toString =
+  // representa a lista como uma String
+  override def toString =                       
     if (isEmpty) "List()"
     else if (size == 1) "List(" + head.toString + ")"
     else "List(" + head + tail.giveString
-    
+  
+  // funcção auxiliar de toString  
   private def giveString(): String = ", " + head.toString + 
     (tail match {
       case EmptyList => ")"
       case _         => tail.giveString
     })
 
+  // retorna um iterator da lista
   def getIterator[T1 >: T](): ListIterator[T1] = new ListIterator[T1](this)
 
+  // executa uma função T => Unit em todos os elementos da lista
   def foreach(foo: (T) => Unit) {
     val myIter = getIterator()
     var continue = false
@@ -111,7 +123,7 @@ class ListIterator[T](var list: List[T]) {
 }
 
 // objeto que representa uma Lista vazia
-case object EmptyList extends List[Nothing]{
+case object EmptyList extends List[Nothing] {
   def tail: List[Nothing]                        = throw new NotSuported("tail não suportado para EmptyList()")  
   def head: Nothing                              = throw new NotSuported("head não suportado para EmptyList()") 
   def isEmpty: Boolean                           = true

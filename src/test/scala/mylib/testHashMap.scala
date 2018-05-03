@@ -7,11 +7,11 @@ import mylib.exceptions._
 class testHashMap extends FlatSpec with Matchers {
 
     "A HashMap" should "have size = 0 after initialized" in {
-        val myHashMap = new HashMap[String, Int](100)
+        val myHashMap = HashMap[String, Int](100)
         myHashMap.size should be (0)
     }
     it should "have size 4 after storing 4 pairs" in {
-        val myHashMap = new HashMap[String, Int](100)
+        val myHashMap = HashMap[String, Int](100)
 
         myHashMap.insert("one"   -> 1)
         myHashMap.insert("two"   -> 2)
@@ -21,14 +21,14 @@ class testHashMap extends FlatSpec with Matchers {
         myHashMap.size should be (4)
     }
     it should "work with repeated arguments" in {
-        val myHashMap = new HashMap[String, Int](100)
+        val myHashMap = HashMap[String, Int](100)
 
         myHashMap.insert("one" -> 1, "two" -> 2, "three" -> 3)
         
         myHashMap.size should be (3)
     }
     it should "work with custom hash functions" in {
-        val myHashMap = new HashMap[String, Int](100, _.size)
+        val myHashMap = HashMap[String, Int](100, (_: String).size)
 
         myHashMap.insert("um"   -> 1)
         myHashMap.insert("dois" -> 2)
@@ -40,12 +40,12 @@ class testHashMap extends FlatSpec with Matchers {
         myHashMap.size should be (2)
     }
     it should "be able to be initialized with pairs" in {
-        val myHashMap = new HashMap[String, Int]("one" -> 1, "two" -> 2)
+        val myHashMap = HashMap[String, Int](100, "one" -> 1, "two" -> 2)
         
         myHashMap.size should be (2)
     }
     it should "work with hasKey() and hasObject" in {
-        val myHashMap = new HashMap[String, Int]("one" -> 1, "two" -> 2, "three" -> 3)
+        val myHashMap = HashMap[String, Int](100, "one" -> 1, "two" -> 2, "three" -> 3)
         
         myHashMap.hasKey("one")   should be (true)
         myHashMap.hasKey("two")   should be (true)
