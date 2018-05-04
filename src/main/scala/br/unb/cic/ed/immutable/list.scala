@@ -2,6 +2,7 @@ package br.unb.cic.ed
 package immutable
 
 import br.unb.cic.ed.exceptions._
+import scala.language.postfixOps
 
 /**
  *  Classe que define e implementa uma Lista Imutável,
