@@ -4,7 +4,7 @@ import br.unb.cic.ed.immutable
 import br.unb.cic.ed.exceptions._
 
 class testList extends FlatSpec with Matchers {
-    "A List" should "have size = 0 and be empty after initialized with no arguments" in {
+    "An Immutable List" should "have size = 0 and be empty after initialized with no arguments" in {
         val myList = immutable.List()
         myList.size should be (0)
         myList.isEmpty should be (true)
@@ -14,7 +14,7 @@ class testList extends FlatSpec with Matchers {
         myList.size should be (3)
         myList.isEmpty should be (false)
     }
-    it should "work with apply" in {
+    it should "return the correct value when using the apply() method" in {
         val myList = immutable.List(1, 2, 3)
         
         myList(0) should be (1)
@@ -38,7 +38,7 @@ class testList extends FlatSpec with Matchers {
             myList(4)
         }
     }
-    it should "work with the :: operator" in {
+    it should "return a new List that includes the left-operand(of type T) followed by the right-operand(of type List[T]) when using the :: operator" in {
 
         val myList  = immutable.List(2, 3)
         val myList2 = 1 :: myList
@@ -58,7 +58,7 @@ class testList extends FlatSpec with Matchers {
         myList3(2) should be (3)
         myList3(3) should be (4)
     }
-    it should "work with the invert operator" in {
+    it should "return a new list, that has the same values as the previous one, but in inverse order, when using the invert() method" in {
         val myList  = immutable.List(1, 2, 3)
         val invList = myList invert
 
@@ -68,7 +68,7 @@ class testList extends FlatSpec with Matchers {
         invList(1) should be (2)
         invList(2) should be (1)
     }
-    it should "work with the ::: operator" in {
+    it should "return a new List that includes the left-operand(of type List[T]) followed by the right-operand(of type List[T]) when using the ::: operator" in {
         val myList1 = immutable.List(1, 2)
         val myList2 = immutable.List(3, 4)
         val myList3 = myList1 ::: myList2
@@ -80,7 +80,7 @@ class testList extends FlatSpec with Matchers {
         myList3(2) should be (3)
         myList3(3) should be (4)
     }
-    it should "work with the hasValue() method" in {
+    it should "return whether or not that value is in the list, when using the hasValue() method" in {
         val myList = immutable.List(1, 2, 3)
 
         myList.hasValue(0) should be (false)

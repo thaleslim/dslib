@@ -10,7 +10,7 @@ class testHashMap extends FlatSpec with Matchers {
         val myHashMap = HashMap[String, Int](100)
         myHashMap.size should be (0)
     }
-    it should "have size 4 after storing 4 pairs" in {
+    it should "have size 4 after initializing with no pairs and inserting 4 pairs" in {
         val myHashMap = HashMap[String, Int](100)
 
         myHashMap.insert("one"   -> 1)
@@ -20,14 +20,14 @@ class testHashMap extends FlatSpec with Matchers {
         
         myHashMap.size should be (4)
     }
-    it should "work with repeated arguments" in {
+    it should "work with repeated parameters on the method insert()" in {
         val myHashMap = HashMap[String, Int](100)
 
         myHashMap.insert("one" -> 1, "two" -> 2, "three" -> 3)
         
         myHashMap.size should be (3)
     }
-    it should "work with custom hash functions" in {
+    it should "work when initialized with custom hash functions" in {
         val myHashMap = HashMap[String, Int](100, (_: String).size)
 
         myHashMap.insert("um"   -> 1)
@@ -44,7 +44,7 @@ class testHashMap extends FlatSpec with Matchers {
         
         myHashMap.size should be (2)
     }
-    it should "work with hasKey() and hasObject" in {
+    it should "work with hasKey() and hasObject()" in {
         val myHashMap = HashMap[String, Int](100, "one" -> 1, "two" -> 2, "three" -> 3)
         
         myHashMap.hasKey("one")   should be (true)

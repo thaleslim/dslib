@@ -21,7 +21,7 @@ sealed abstract class List[+T] {
   def tail: List[T]   
 
   // checa se a lista está vazia
-  def isEmpty: Boolean
+  def isEmpty(): Boolean
 
   // pega o n-ésizmo próximo elemento da lista
   def apply(ind: Int): T =
