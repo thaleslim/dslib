@@ -5,8 +5,7 @@ import contracts.Map
 
 // import scala.reflect.ClassTag
 
-/**
- *   Classe que define o funcionamento de uma
+/**  Classe que define o funcionamento de uma
  *  HashTable.
  *
  *   Nessa implementação de Mapa, quando uma
@@ -21,29 +20,31 @@ protected class HashTable[A, B](
 )
 extends Map[A,B] {
 
-  // a função de hash original, que pode levar a qualquer Int
+	/**	A função de Hash original, que pode levar a qualquer Int. */
   private var hashFoo: (A) => Int = (_: A).hashCode
-  // a função de hash usada, que leva até qualquer inteiro entre 0 e maxSize -1
+	/**	A função de Hash usada, que leva até qualquer inteiro entre 0 e maxSize -1. */
   protected def hashFunc: (A) => Int = hashFoo(_) % maxSize
   
-  // Array que guarda todos os pares Chave/Valor da HashTable, cada indice da HashTable contendo uma Lista de Pares
+  /**	Array que guarda todos os pares Chave/Valor da HashTable, cada índice da HashTable contendo uma Lista de Pares. */
   val values = Array.fill[immutable.List[Pair[A, B]]](maxSize) {immutable.EmptyList}
 
-  // a função que insere pares Chave/Valor na HashTable
+  /**	A função que insere pares Chave/Valor na HashTable. */
   def insert(pairs: (A, B)*) {
     for (pair <- pairs) {
       values(hashFunc(pair._1)) = Pair[A, B](pair._1, pair._2) :: values(hashFunc(pair._1))
     }
   }
 
-  // retorna a quantidade de pares Chave/Valor que a HashTable tem
+  /**	Retorna a quantidade de pares Chave/Valor que a HashTable tem. */
   def size: Int = {
     var counter = 0
     values foreach (counter += _.size)
     counter
   }
 
-  // retorna o Valor correspondente, se inserida uma chave que foi inserida como parte de um Par anteriormente, e se esse par não foi removido em uma colisão
+  /**	Retorna o Valor correspondente, se inserida uma chave que foi inserida como parte de um Par anteriormente,
+	 * e se esse par não foi removido em uma colisão.
+	 */
   def get(key: A): Option[B] = {
     if (values(hashFunc(key)) isEmpty) None
     else {
@@ -54,7 +55,7 @@ extends Map[A,B] {
     }
   }
   
-  // checa se uma chave está dentro do HashTable
+  /**	Checa se uma Chave está dentro do HashTable. */
   def hasKey(key: A): Boolean = {
     if (values(hashFunc(key)) isEmpty) false
     else {
@@ -65,7 +66,7 @@ extends Map[A,B] {
     }
   }
 
-  // checa se um Valor(Objeto) está dentro da HashTable
+  /**	Checa se um Valor(Objeto) está dentro da HashTable. */
   def hasObject(value: B): Boolean = {
     values foreach {
       _ foreach {
@@ -77,10 +78,10 @@ extends Map[A,B] {
 
 }
 
-// Objeto auxiliar, usado para instanciar HashTable's
+/**	Objeto auxiliar, usado para instanciar HashTable's. */
 object HashTable {
 
-  // se usando uma função de hash customizada
+  /**	Se usando uma função de Hash customizada. */
   def apply[A, B](mSize: Int, hFoo: (A) => Int, pairs: (A, B)*): HashTable[A, B]  = {
     val hTable = new HashTable[A, B](mSize)
     hTable.hashFoo = hFoo
@@ -88,7 +89,7 @@ object HashTable {
     hTable
   }
   
-  // se usando a função de hash padrão
+  /**	Se usando a função de Hash padrão. */
   def apply[A, B](mSize: Int, pairs: (A, B)*): HashTable[A, B] = {
     val hTable = new HashTable[A, B](mSize)
     hTable.insert(pairs: _*)

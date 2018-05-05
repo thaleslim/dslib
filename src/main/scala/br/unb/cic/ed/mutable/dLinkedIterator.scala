@@ -5,25 +5,25 @@ import contracts._
 import modifications._
 import exceptions._
 
-/**
- *  Classe que define e implementa o comportamento
+/** Classe que define e implementa o comportamento
  * de um iterator para uma Estrutura de Dados Linear
  * Duplamente Encadeada.
  *
  * @author Rafael G. de Paulo
  */
-// T: O tipo de dado que a Estrutura Linear Guarda
-// NodeImp: O tipo do Node que a Estrutura Linear usa
+
 class DLinkedIterator[T, NodeImp <: DNode[T, NodeImp]](
   estLinRef: DLinked[T, NodeImp],
   startNode:   NodeImp
 ) extends LinkedIterator[T, NodeImp](estLinRef, startNode) {
 
+  /** @return True caso haja um elemento anterior. */
   def hasPrev: Boolean = node.prev match {
     case Some(aNode) => true
     case None        => false
   }
 
+  /** @return O elemento anterior. */
   def prev() {
     node.prev match {
       case Some(prevNode) => node = prevNode
