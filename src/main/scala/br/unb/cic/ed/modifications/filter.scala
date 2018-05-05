@@ -16,8 +16,8 @@ trait Filter[T] extends EstLin[T] {
     val estLin = instantiate[T]()
     foreach {
       (value: T) => if (foo(value)) estLin.push(value)
-    estLin
 		}
+    estLin
   }
 
   def filterNot(foo: (T) => Boolean)(implicit ev: ClassTag[T]): EstLin[T] = filter(!foo(_))
