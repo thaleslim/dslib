@@ -1,8 +1,7 @@
 package br.unb.cic.ed
 package contracts
 
-/**
- *  Trait que define o comportamento estático
+/** Trait que define o comportamento estático
  * que uma Estrutura de Dados Linear pode ter.
  *
  * OBS: se uma EslLin[T] não mixar "static", ela DEVE mixar "linked", e vice-versa
@@ -14,5 +13,5 @@ package contracts
  * @author Rafael G. de Paulo
  */
 trait Static[T] extends EstLin[T] {
-  def maxSize: Int  // retorna o tamanho máximo da Estrutura Linear
+  def maxSize: Int
 }
