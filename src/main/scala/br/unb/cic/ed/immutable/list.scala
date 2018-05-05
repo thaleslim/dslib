@@ -4,8 +4,7 @@ package immutable
 import br.unb.cic.ed.exceptions._
 import scala.language.postfixOps
 
-/**
- *  Classe que define e implementa uma Lista Imutável,
+/** Classe que define e implementa uma Lista Imutável,
  * com métodos implementados usando recursão
  *
  *  Por causa de um problema com covariancia e
@@ -14,29 +13,29 @@ import scala.language.postfixOps
  *
  * @author Rafael G. de Paulo
  */
-sealed abstract class List[+T] {
-  // pega o primeiro elemento da lista
+abstract class List[+T] {
+  /** @return Primeiro elemento da Lista. */
   def head: T
 
-  // pega o resto da lista, excluindo o primeiro elemento
+  /** @return Nova Lista, excluindo o primeiro elemento. */ 
   def tail: List[T]   
 
-  // checa se a lista está vazia
+  /** @return True se a lista estiver vazia. */  
   def isEmpty(): Boolean
 
-  // pega o n-ésizmo próximo elemento da lista
+  /** @return O n-ésizmo elemento da lista. */
   def apply(ind: Int): T =
     if (ind < 0)      throw new NegativeIndex("indice negativo em List.apply()")
     else if (ind > 0) tail.apply(ind - 1)
     else              head
 
-  // pega o tamanho da lista
+  /** @return um Int tamanho da fila. */
   def size(): Int = 1 + tail.size 
 
-  // retorna uma nova lista, que é pref concatenado à essa lista
+  /** @return Nova Lista, com pref concatenado à essa lista. */
   def ::[T1 >: T](pref: T1): List[T1] = new ::(pref, this)  
 
-  // retorna uma lista identica a essa, só que invertida
+  /** @return Nova Lista, sendo uma inversão da Lista original. */
   def invert(): List[T] = {                                   
     def getInvert(in: List[T], out: List[T] = EmptyList): List[T] = {
       in match {
@@ -47,7 +46,7 @@ sealed abstract class List[+T] {
     getInvert(this)
   }
 
-  // retorna uma nova lista, que é a concatenação dessa lista com uma anterior
+  /** @return Nova Lista, sendo a concatenação desta com outra anterior. */ 
   def :::[T1 >: T](pref: List[T1]): List[T1] =              
     if (isEmpty) pref
     else if (pref isEmpty) this
@@ -62,29 +61,35 @@ sealed abstract class List[+T] {
       append(prefInv, this.asInstanceOf[List[T1]])
     }
 
-  // checa se a lista possui um valor ou não
+  /** @return True se a Lista tiver um valor. */ 
   def hasValue[T1 >: T](value: T1): Boolean =   
     if (isEmpty) false
     else if (head == value) true
     else tail.hasValue(value)
 
-  // representa a lista como uma String
+  /** Representa a Lista como String. */
   override def toString =                       
     if (isEmpty) "List()"
     else if (size == 1) "List(" + head.toString + ")"
     else "List(" + head + tail.giveString
   
-  // funcção auxiliar de toString  
+  /**
+	 * Função auxiliar de toString.
+	 */ 
   private def giveString(): String = ", " + head.toString + 
     (tail match {
       case EmptyList => ")"
       case _         => tail.giveString
     })
 
-  // retorna um iterator da lista
+  /**
+	 * @return Um Iterator da Lista.
+	 */
   def getIterator[T1 >: T](): ListIterator[T1] = new ListIterator[T1](this)
 
-  // executa uma função T => Unit em todos os elementos da lista
+  /**
+	 * @return Nova Lista com uma função T => Unit aplicada em todos os elementos.
+	 */
   def foreach(foo: (T) => Unit) {
     val myIter = getIterator()
     var continue = false
@@ -99,41 +104,55 @@ sealed abstract class List[+T] {
       } while (continue)
   }
 
-  // retorna uma nova Lista, composta de todos os elementos dessa lista que fizerem foo retornar true
+  /**
+	 * @return Nova Lista, composta de todos os elementos dessa Lista que fizeram foo retornar true.
+	 */
   def filter(foo: (T) => Boolean): List[T] =
     if (isEmpty) EmptyList
     else if (foo(head)) head :: tail.filter(foo)
     else tail.filter(foo)
 
-  // retorna uma nova Lista, composta de todos os elementos dessa lista que fizerem foo retornar false
+  /**
+	 * @return Nova Lista, composta de todos os elementos dessa Lista que fizeram foo retornar false.
+	 */
   def filterNot(foo: (T) => Boolean): List[T] = filter(!foo(_))
 
-  // reduz a lista à um único valor, usando a função inserida e um valor inicial
+  /**
+	 * Reduz a Lista a um único valor, usando a função inserida e um valor inicial.
+	 */
   def reduce[A](initVal: A)(foo: (A, T) => A): A =
     if (isEmpty) initVal
     else tail.reduce(foo(initVal, head))(foo)
 
-  // retorna uma lista do tipo A, que consiste de elementos que são o resultado de aplicar foo em cada um dos elementos dessa lista
+  /**
+	 * @return Nova Lista do tipo A, que consiste de elementos que são o resultado de aplicar foo em cada um dos elementos dessa Lista.
+	 */
   def map[A](foo: (T) => A): List[A] =
     if (isEmpty) EmptyList
     else foo(head) :: tail.map(foo)
 }
 
-// usada para pattern matching (casamento de padrões)
+  /**
+	 * Usada para Pattern Matching(casamento de padrões)
+	 */
 private case class ::[T](val h: T, private var t: List[T]) extends List[T] {
   def head = h
   def tail = t
   def isEmpty = false
 }
 
-// usado para a criação de listas, usando a forma "val l = List(a, b, c, d)"
+  /**
+	 * Usado para a criação de Listas, usando a forma "val l = List(a, b, c, d)".
+	 */
 object List {
   def apply[T](values: T*): List[T] = 
     if (values isEmpty) EmptyList
     else               ::(values.head, apply(values.tail: _*))
 }
 
-// usado para iterar em Listas
+  /**
+	 * Usado para Iterar em Listas.
+	 */
 class ListIterator[T](var list: List[T]) {
   def value = list.head
   def next() =
@@ -142,7 +161,9 @@ class ListIterator[T](var list: List[T]) {
   def hasNext() = !list.tail.isEmpty
 }
 
-// objeto que representa uma Lista vazia
+  /**
+	 * Objeto que representa uma Lista vazia.
+	 */
 case object EmptyList extends List[Nothing] {
   def tail: List[Nothing]                        = throw new NotSuported("tail não suportado para EmptyList()")  
   def head: Nothing                              = throw new NotSuported("head não suportado para EmptyList()") 
