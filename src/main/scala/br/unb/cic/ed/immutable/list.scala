@@ -73,23 +73,17 @@ abstract class List[+T] {
     else if (size == 1) "List(" + head.toString + ")"
     else "List(" + head + tail.giveString
   
-  /**
-	 * Função auxiliar de toString.
-	 */ 
+  /** Função auxiliar de toString. */ 
   private def giveString(): String = ", " + head.toString + 
     (tail match {
       case EmptyList => ")"
       case _         => tail.giveString
     })
 
-  /**
-	 * @return Um Iterator da Lista.
-	 */
+  /** @return Um Iterator da Lista. */
   def getIterator[T1 >: T](): ListIterator[T1] = new ListIterator[T1](this)
 
-  /**
-	 * @return Nova Lista com uma função T => Unit aplicada em todos os elementos.
-	 */
+  /** @return Nova Lista com uma função T => Unit aplicada em todos os elementos. */
   def foreach(foo: (T) => Unit) {
     val myIter = getIterator()
     var continue = false
@@ -104,55 +98,41 @@ abstract class List[+T] {
       } while (continue)
   }
 
-  /**
-	 * @return Nova Lista, composta de todos os elementos dessa Lista que fizeram foo retornar true.
-	 */
+  /** @return Nova Lista, composta de todos os elementos dessa Lista que fizeram foo retornar true. */
   def filter(foo: (T) => Boolean): List[T] =
     if (isEmpty) EmptyList
     else if (foo(head)) head :: tail.filter(foo)
     else tail.filter(foo)
 
-  /**
-	 * @return Nova Lista, composta de todos os elementos dessa Lista que fizeram foo retornar false.
-	 */
+  /** @return Nova Lista, composta de todos os elementos dessa Lista que fizeram foo retornar false. */
   def filterNot(foo: (T) => Boolean): List[T] = filter(!foo(_))
 
-  /**
-	 * Reduz a Lista a um único valor, usando a função inserida e um valor inicial.
-	 */
+  /** Reduz a Lista a um único valor, usando a função inserida e um valor inicial. */
   def reduce[A](initVal: A)(foo: (A, T) => A): A =
     if (isEmpty) initVal
     else tail.reduce(foo(initVal, head))(foo)
 
-  /**
-	 * @return Nova Lista do tipo A, que consiste de elementos que são o resultado de aplicar foo em cada um dos elementos dessa Lista.
-	 */
+  /** @return Nova Lista do tipo A, que consiste de elementos que são o resultado de aplicar foo em cada um dos elementos dessa Lista. */
   def map[A](foo: (T) => A): List[A] =
     if (isEmpty) EmptyList
     else foo(head) :: tail.map(foo)
 }
 
-  /**
-	 * Usada para Pattern Matching(casamento de padrões)
-	 */
+  /** Usada para Pattern Matching(casamento de padrões). */
 private case class ::[T](val h: T, private var t: List[T]) extends List[T] {
   def head = h
   def tail = t
   def isEmpty = false
 }
 
-  /**
-	 * Usado para a criação de Listas, usando a forma "val l = List(a, b, c, d)".
-	 */
+  /** Usado para a criação de Listas, usando a forma "val l = List(a, b, c, d)". */
 object List {
   def apply[T](values: T*): List[T] = 
     if (values isEmpty) EmptyList
     else               ::(values.head, apply(values.tail: _*))
 }
 
-  /**
-	 * Usado para Iterar em Listas.
-	 */
+  /** Usado para Iterar em Listas. */
 class ListIterator[T](var list: List[T]) {
   def value = list.head
   def next() =
@@ -161,9 +141,7 @@ class ListIterator[T](var list: List[T]) {
   def hasNext() = !list.tail.isEmpty
 }
 
-  /**
-	 * Objeto que representa uma Lista vazia.
-	 */
+  /** Objeto que representa uma Lista vazia. */
 case object EmptyList extends List[Nothing] {
   def tail: List[Nothing]                        = throw new NotSuported("tail não suportado para EmptyList()")  
   def head: Nothing                              = throw new NotSuported("head não suportado para EmptyList()") 
